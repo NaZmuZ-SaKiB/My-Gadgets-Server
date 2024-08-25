@@ -20,3 +20,7 @@ router.post(
 );
 
 // PATCH
+
+// DELETE
+
+export const AuthRouter = router;
