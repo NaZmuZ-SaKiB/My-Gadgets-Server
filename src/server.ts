@@ -19,7 +19,7 @@ const main = async () => {
       await User.create({
         name: 'Boss',
         email: 'boss@gmail.com',
-        role: USER_ROLE.ADMIN,
+        role: USER_ROLE.SUPER_ADMIN,
         password: 'superman',
       });
     }
