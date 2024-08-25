@@ -11,7 +11,7 @@ const signUp = async (payload: TUser) => {
   if (payload.role !== USER_ROLE.USER) {
     throw new AppError(
       httpStatus.FORBIDDEN,
-      `You are not allowed to create this role: "${payload.role}"`,
+      `You are not allowed to create this role: "${payload.role}."`,
     );
   }
 
@@ -36,7 +36,7 @@ const signIn = async (payload: { email: string; password: string }) => {
   }).select('+password');
 
   if (!user) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid email or password');
+    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid email or password.');
   }
 
   const isPasswordCorrect = await bcrypt.compare(
@@ -45,7 +45,7 @@ const signIn = async (payload: { email: string; password: string }) => {
   );
 
   if (!isPasswordCorrect) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid email or password');
+    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid email or password.');
   }
 
   const token = await jwtHelpers.generateToken(
