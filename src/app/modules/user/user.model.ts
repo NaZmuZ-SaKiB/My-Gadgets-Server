@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt";
-import { model, Schema } from "mongoose";
+import bcrypt from 'bcrypt';
+import { model, Schema } from 'mongoose';
 
-import config from "../../config";
-import { TUser } from "./user.type";
-import { USER_ROLE, userRoles } from "./user.constant";
+import config from '../../config';
+import { TUser } from './user.type';
+import { USER_ROLE, userRoles } from './user.constant';
 
 const userSchema = new Schema<TUser>(
   {
@@ -16,6 +16,7 @@ const userSchema = new Schema<TUser>(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -30,28 +31,28 @@ const userSchema = new Schema<TUser>(
     addresses: [
       {
         type: Schema.Types.ObjectId,
-        ref: "ShippingAddress",
+        ref: 'ShippingAddress',
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(
     this.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt_salt_rounds),
   );
 
   next();
 });
 
-userSchema.post("save", async function (doc, next) {
-  doc.password = "";
+userSchema.post('save', async function (doc, next) {
+  doc.password = '';
 
   next();
 });
 
-const User = model<TUser>("User", userSchema);
+const User = model<TUser>('User', userSchema);
 
 export default User;
