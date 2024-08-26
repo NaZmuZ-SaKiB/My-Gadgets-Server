@@ -8,7 +8,16 @@ import { CategoryValidation } from './category.validation';
 const router = Router();
 
 // GET
-router.get('/', CategoryController.getAll);
+router.get(
+  '/',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  CategoryController.getAll,
+);
+router.get(
+  '/main',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  CategoryController.getAllMain,
+);
 router.get('/:id', CategoryController.getById);
 
 // POST
