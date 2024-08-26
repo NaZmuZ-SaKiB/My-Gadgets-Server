@@ -39,8 +39,9 @@ router.patch(
 
 // DELETE
 router.delete(
-  '/:id',
+  '/',
   auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  validateRequest(CategoryValidation.remove),
   CategoryController.remove,
 );
 
