@@ -55,14 +55,6 @@ const getAll = async (filters: Record<string, any>) => {
   };
 };
 
-const getAllMain = async () => {
-  const categories = await Category.find({
-    parent: { $in: [null, undefined] },
-  });
-
-  return categories;
-};
-
 const getById = async (id: string) => {
   const category = await Category.findById(id).populate('updatedBy');
 
@@ -125,7 +117,6 @@ export const CategoryService = {
   create,
   update,
   getAll,
-  getAllMain,
   getById,
   toggleFeatured,
   toggleShowOnTopMenu,
