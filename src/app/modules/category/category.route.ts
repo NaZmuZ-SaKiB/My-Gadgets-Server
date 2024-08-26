@@ -19,4 +19,29 @@ router.post(
   CategoryController.create,
 );
 
+// PATCH
+router.patch(
+  '/:id',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  validateRequest(CategoryValidation.create.partial()),
+  CategoryController.update,
+);
+router.patch(
+  '/:id/featured',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  CategoryController.toggleFeatured,
+);
+router.patch(
+  '/:id/show-on-top-menu',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  CategoryController.toggleShowOnTopMenu,
+);
+
+// DELETE
+router.delete(
+  '/:id',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  CategoryController.remove,
+);
+
 export const CategoryRouter = router;
