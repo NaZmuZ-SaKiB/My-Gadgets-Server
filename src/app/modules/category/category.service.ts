@@ -107,8 +107,8 @@ const toggleShowOnTopMenu = async (id: string) => {
   return null;
 };
 
-const remove = async (id: string) => {
-  await Category.findByIdAndDelete(id);
+const remove = async (ids: string[]) => {
+  await Category.deleteMany({ _id: { $in: ids } });
 
   return null;
 };
