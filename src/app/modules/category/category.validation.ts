@@ -11,6 +11,11 @@ export const create = z.object({
   }),
 });
 
+const remove = z.object({
+  ids: z.array(z.string()).min(1, 'At least one id is required'),
+});
+
 export const CategoryValidation = {
   create,
+  remove,
 };
