@@ -21,7 +21,8 @@ const getAll = catchAsync(async (req, res) => {
     success: true,
     statusCode: httpStatus.OK,
     message: 'Categories fetched successfully',
-    data: result,
+    data: result.data,
+    meta: result.meta,
   });
 });
 
