@@ -26,6 +26,17 @@ const categorySchema = new Schema<TCategory>(
       type: Schema.Types.ObjectId,
       ref: 'Media',
     },
+    parent: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: false,
+    },
+    subCategories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+      },
+    ],
 
     updatedBy: {
       type: Schema.Types.ObjectId,

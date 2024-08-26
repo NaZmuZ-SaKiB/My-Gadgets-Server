@@ -6,6 +6,8 @@ export type TCategory = {
   featured: boolean;
   showOnTopMenu: boolean;
   image: Types.ObjectId;
+  parent?: Types.ObjectId;
+  subCategories: Types.ObjectId[];
 
   createdAt: Date;
   updatedAt: Date;
