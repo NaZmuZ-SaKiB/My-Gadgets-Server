@@ -48,7 +48,8 @@ const getAll = async (filters: Record<string, any>) => {
   const categories = await Category.find(query)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .populate('parent');
 
   const total = await Category.countDocuments(query);
 
