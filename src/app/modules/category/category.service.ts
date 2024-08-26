@@ -4,6 +4,7 @@ import calculatePagination from '../../utils/calculatePagination';
 import { categorySearchableFields } from './category.constant';
 import Category from './category.model';
 import { TCategory } from './category.type';
+import { FilterQuery } from 'mongoose';
 
 const create = async (userId: string, payload: TCategory) => {
   const category = await Category.create({ ...payload, updatedBy: userId });
@@ -38,12 +39,18 @@ const getAll = async (filters: Record<string, any>) => {
     })),
   };
 
-  const categories = await Category.find(searchConditions)
+  const query: FilterQuery<TCategory> = searchConditions;
+
+  if (filters?.onlyParent === 'true') {
+    query.parent = { $in: [null, '', undefined] };
+  }
+
+  const categories = await Category.find(query)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
     .limit(limit);
 
-  const total = await Category.countDocuments(searchConditions);
+  const total = await Category.countDocuments(query);
 
   return {
     data: categories,
