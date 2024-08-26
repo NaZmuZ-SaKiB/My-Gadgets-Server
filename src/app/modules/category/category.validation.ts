@@ -9,6 +9,7 @@ export const create = z.object({
     required_error: 'Label is required',
     invalid_type_error: 'Label must be a string',
   }),
+  parent: z.string().optional(),
 });
 
 const remove = z.object({
