@@ -79,7 +79,7 @@ const remove = catchAsync(async (req, res) => {
 
   sendResponse(res, {
     success: true,
-    statusCode: httpStatus.NO_CONTENT,
+    statusCode: httpStatus.OK,
     message: 'Category removed successfully',
     data: result,
   });
