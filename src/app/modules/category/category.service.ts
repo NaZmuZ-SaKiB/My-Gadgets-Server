@@ -42,7 +42,7 @@ const getAll = async (filters: Record<string, any>) => {
   const query: FilterQuery<TCategory> = searchConditions;
 
   if (filters?.onlyParent === 'true') {
-    query.parent = { $in: [null, '', undefined] };
+    query.parent = { $in: [null, undefined] };
   }
 
   const categories = await Category.find(query)
