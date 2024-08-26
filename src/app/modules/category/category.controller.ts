@@ -75,7 +75,7 @@ const toggleShowOnTopMenu = catchAsync(async (req, res) => {
 });
 
 const remove = catchAsync(async (req, res) => {
-  const result = await CategoryService.remove(req.params?.id);
+  const result = await CategoryService.remove(req.body?.ids);
 
   sendResponse(res, {
     success: true,
