@@ -14,6 +14,21 @@ const create = catchAsync(async (req, res) => {
   });
 });
 
+const update = catchAsync(async (req, res) => {
+  const result = await CategoryService.update(
+    req?.user?._id,
+    req.params?.id,
+    req.body,
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Category updated successfully',
+    data: result,
+  });
+});
+
 const getAll = catchAsync(async (req, res) => {
   const result = await CategoryService.getAll(req.query);
 
@@ -37,8 +52,45 @@ const getById = catchAsync(async (req, res) => {
   });
 });
 
+const toggleFeatured = catchAsync(async (req, res) => {
+  const result = await CategoryService.toggleFeatured(req.params?.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Featured updated successfully',
+    data: result,
+  });
+});
+
+const toggleShowOnTopMenu = catchAsync(async (req, res) => {
+  const result = await CategoryService.toggleShowOnTopMenu(req.params?.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Show on top menu updated successfully',
+    data: result,
+  });
+});
+
+const remove = catchAsync(async (req, res) => {
+  const result = await CategoryService.remove(req.params?.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.NO_CONTENT,
+    message: 'Category removed successfully',
+    data: result,
+  });
+});
+
 export const CategoryController = {
   create,
+  update,
   getAll,
   getById,
+  toggleFeatured,
+  toggleShowOnTopMenu,
+  remove,
 };
