@@ -13,7 +13,11 @@ router.get(
   auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
   CategoryController.getAll,
 );
-router.get('/:id', CategoryController.getById);
+router.get(
+  '/:id',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  CategoryController.getById,
+);
 
 // POST
 router.post(
