@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AuthRouter } from '../modules/auth/auth.route';
 import { CategoryRouter } from '../modules/category/category.route';
+import { BrandRouter } from '../modules/brand/brand.route';
 
 const MainRouter = Router();
 
@@ -17,6 +18,10 @@ const routes: TRoute[] = [
   {
     path: '/category',
     router: CategoryRouter,
+  },
+  {
+    path: '/brand',
+    router: BrandRouter,
   },
 ];
 
