@@ -4,7 +4,7 @@ import calculatePagination from '../../utils/calculatePagination';
 import { categorySearchableFields } from './category.constant';
 import Category from './category.model';
 import { TCategory } from './category.type';
-import { FilterQuery, startSession } from 'mongoose';
+import { FilterQuery, startSession, Types } from 'mongoose';
 
 const create = async (userId: string, payload: TCategory) => {
   let parentCatrgory = null;
@@ -211,7 +211,49 @@ const toggleShowOnTopMenu = async (id: string) => {
 };
 
 const remove = async (ids: string[]) => {
-  await Category.deleteMany({ _id: { $in: ids } });
+  const categories = await Category.find({ _id: { $in: ids } });
+
+  const parentCategoryIds = categories
+    .filter((cat) => cat.parent)
+    .map((cat) => cat.parent);
+
+  const subCategoryIds: Types.ObjectId[] = [];
+
+  categories.forEach((cat) => {
+    subCategoryIds.push(...cat.subCategories);
+  });
+
+  const session = await startSession();
+
+  try {
+    session.startTransaction();
+
+    // remove categories from parent
+    await Category.updateMany(
+      { _id: { $in: parentCategoryIds } },
+      { $pull: { subCategories: { $in: ids } } },
+      { session },
+    );
+
+    // remove categories
+    await Category.deleteMany(
+      { _id: { $in: [...ids, ...subCategoryIds] } },
+      { session },
+    );
+
+    // TODO: remove products
+
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error: any) {
+    await session.abortTransaction();
+    await session.endSession();
+
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      error?.message || "Couldn't delete categories.",
+    );
+  }
 
   return null;
 };
