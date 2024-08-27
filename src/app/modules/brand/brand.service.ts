@@ -30,8 +30,7 @@ const getAll = async (filters: Record<string, any>) => {
   const brands = await Brand.find(searchConditions)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
-    .limit(limit)
-    .populate('parent');
+    .limit(limit);
 
   const total = await Brand.countDocuments(searchConditions);
 
