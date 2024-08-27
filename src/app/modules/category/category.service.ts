@@ -4,10 +4,47 @@ import calculatePagination from '../../utils/calculatePagination';
 import { categorySearchableFields } from './category.constant';
 import Category from './category.model';
 import { TCategory } from './category.type';
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, startSession } from 'mongoose';
 
 const create = async (userId: string, payload: TCategory) => {
-  const category = await Category.create({ ...payload, updatedBy: userId });
+  let parentCatrgory = null;
+
+  // check if parent category exists
+  if (payload.parent) {
+    parentCatrgory = await Category.findById(payload.parent);
+
+    if (!parentCatrgory) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Parent category not found.');
+    }
+  }
+
+  const session = await startSession();
+
+  try {
+    session.startTransaction();
+
+    const category = await Category.create(
+      [{ ...payload, updatedBy: userId }],
+      { session },
+    );
+
+    // update parent category
+    if (parentCatrgory) {
+      parentCatrgory.subCategories.push(category[0]._id);
+      await parentCatrgory.save({ session });
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error: any) {
+    await session.abortTransaction();
+    await session.endSession();
+
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      error?.message || "Couldn't create category.",
+    );
+  }
 
   return null;
 };
@@ -17,14 +54,69 @@ const update = async (
   categoryId: string,
   payload: TCategory,
 ) => {
-  const category = await Category.findByIdAndUpdate(
-    categoryId,
-    {
-      ...payload,
-      updatedBy: userId,
-    },
-    { new: true, runValidators: true },
-  );
+  const category = await Category.findById(categoryId);
+  if (!category) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Category not found.');
+  }
+
+  let parentCatrgory = null;
+
+  // check if parent category changed and exists
+  if (
+    payload.parent &&
+    category?.parent?.toString() !== payload.parent?.toString()
+  ) {
+    parentCatrgory = await Category.findById(payload.parent);
+
+    if (!parentCatrgory) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Parent category not found.');
+    }
+  }
+
+  const session = await startSession();
+
+  try {
+    session.startTransaction();
+
+    const updateCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      {
+        ...payload,
+        updatedBy: userId,
+      },
+      { new: true, runValidators: true, session },
+    );
+
+    if (!updateCategory) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Category update failed.');
+    }
+
+    if (parentCatrgory) {
+      // remove category from old parent
+      const oldParent = await Category.findById(category.parent);
+      if (oldParent) {
+        oldParent.subCategories = oldParent.subCategories.filter(
+          (id) => id.toString() !== categoryId,
+        );
+        await oldParent.save({ session });
+      }
+
+      // add category to new parent
+      parentCatrgory.subCategories.push(updateCategory._id);
+      await parentCatrgory.save({ session });
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error: any) {
+    await session.abortTransaction();
+    await session.endSession();
+
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      error?.message || "Couldn't update category.",
+    );
+  }
 
   return null;
 };
@@ -64,7 +156,10 @@ const getAll = async (filters: Record<string, any>) => {
 };
 
 const getById = async (id: string) => {
-  const category = await Category.findById(id).populate('updatedBy');
+  const category = await Category.findById(id).populate([
+    'updatedBy',
+    'parent',
+  ]);
 
   return category;
 };
