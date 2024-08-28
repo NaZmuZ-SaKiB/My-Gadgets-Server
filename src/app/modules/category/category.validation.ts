@@ -10,6 +10,7 @@ export const create = z.object({
     invalid_type_error: 'Label must be a string',
   }),
   parent: z.string().optional(),
+  image: z.string().optional(),
 });
 
 const remove = z.object({
