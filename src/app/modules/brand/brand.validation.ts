@@ -5,6 +5,7 @@ export const create = z.object({
     required_error: 'Name is required',
     invalid_type_error: 'Name must be a string',
   }),
+  image: z.string().optional(),
 });
 
 const remove = z.object({
