@@ -42,3 +42,5 @@ router.delete(
   validateRequest(MediaValidation.remove),
   MediaController.remove,
 );
+
+export const MediaRouter = router;
