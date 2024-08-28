@@ -41,6 +41,17 @@ const getAll = catchAsync(async (req, res) => {
   });
 });
 
+const getAllWithSubCats = catchAsync(async (req, res) => {
+  const result = await CategoryService.getAllWithSubCats();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Categories fetched successfully',
+    data: result,
+  });
+});
+
 const getById = catchAsync(async (req, res) => {
   const result = await CategoryService.getById(req.params?.id);
 
@@ -89,6 +100,7 @@ export const CategoryController = {
   create,
   update,
   getAll,
+  getAllWithSubCats,
   getById,
   toggleFeatured,
   toggleShowOnTopMenu,
