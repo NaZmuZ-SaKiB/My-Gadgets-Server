@@ -5,7 +5,7 @@ export type TCategory = {
   label: string;
   featured: boolean;
   showOnTopMenu: boolean;
-  image: Types.ObjectId;
+  image?: Types.ObjectId;
   parent?: Types.ObjectId;
   subCategories: Types.ObjectId[];
 
