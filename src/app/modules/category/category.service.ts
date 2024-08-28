@@ -179,17 +179,26 @@ const getById = async (id: string) => {
 const toggleFeatured = async (id: string) => {
   const featuredCount = await Category.countDocuments({ featured: true });
 
-  if (featuredCount >= 12) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Only 12 categories can be featured at a time.',
-    );
-  }
-
   const category = await Category.findById(id);
 
   if (!category) {
     throw new AppError(httpStatus.NOT_FOUND, 'Category not found.');
+  }
+
+  if (!category.featured) {
+    if (featuredCount >= 12) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Only 12 categories can be featured at a time.',
+      );
+    }
+
+    if (!category.image) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Category must have an image to be featured.',
+      );
+    }
   }
 
   category.featured = !category.featured;
@@ -203,17 +212,17 @@ const toggleShowOnTopMenu = async (id: string) => {
     showOnTopMenu: true,
   });
 
-  if (showOnTopMenuCount >= 8) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Only 8 categories can be shown on top menu at a time.',
-    );
-  }
-
   const category = await Category.findById(id);
 
   if (!category) {
     throw new AppError(httpStatus.NOT_FOUND, 'Category not found.');
+  }
+
+  if (!category.showOnTopMenu && showOnTopMenuCount >= 8) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Only 8 categories can be shown on top menu at a time.',
+    );
   }
 
   category.showOnTopMenu = !category.showOnTopMenu;
