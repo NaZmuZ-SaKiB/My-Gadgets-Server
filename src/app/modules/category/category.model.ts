@@ -29,7 +29,6 @@ const categorySchema = new Schema<TCategory>(
     parent: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
-      required: false,
     },
     subCategories: [
       {
