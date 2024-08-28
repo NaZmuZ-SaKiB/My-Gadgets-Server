@@ -141,7 +141,7 @@ const getAll = async (filters: Record<string, any>) => {
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
     .limit(limit)
-    .populate('parent');
+    .populate(['parent', 'image']);
 
   const total = await Category.countDocuments(query);
 
@@ -159,6 +159,7 @@ const getById = async (id: string) => {
   const category = await Category.findById(id).populate([
     'updatedBy',
     'parent',
+    'image',
   ]);
 
   return category;

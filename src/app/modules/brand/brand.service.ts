@@ -30,7 +30,8 @@ const getAll = async (filters: Record<string, any>) => {
   const brands = await Brand.find(searchConditions)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .populate(['image']);
 
   const total = await Brand.countDocuments(searchConditions);
 
@@ -45,7 +46,7 @@ const getAll = async (filters: Record<string, any>) => {
 };
 
 const getById = async (id: string) => {
-  const brand = await Brand.findById(id).populate(['updatedBy']);
+  const brand = await Brand.findById(id).populate(['updatedBy', 'image']);
 
   return brand;
 };
