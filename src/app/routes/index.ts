@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { AuthRouter } from '../modules/auth/auth.route';
 import { CategoryRouter } from '../modules/category/category.route';
 import { BrandRouter } from '../modules/brand/brand.route';
+import { MediaRouter } from '../modules/media/media.route';
 
 const MainRouter = Router();
 
@@ -22,6 +23,10 @@ const routes: TRoute[] = [
   {
     path: '/brand',
     router: BrandRouter,
+  },
+  {
+    path: '/media',
+    router: MediaRouter,
   },
 ];
 
