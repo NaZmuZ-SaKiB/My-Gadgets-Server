@@ -58,7 +58,9 @@ const create = z.object({
     .enum([...(chargingPorts as [string, ...string[]])])
     .optional(),
   weight: z.number().optional(),
-  powerSource: z.enum([...(powerSources as [string, ...string[]])]).optional(),
+  powerSource: z
+    .array(z.enum([...(powerSources as [string, ...string[]])]))
+    .optional(),
   camera: z.number().optional(),
   displaySize: z.number().optional(),
   compatibility: z
