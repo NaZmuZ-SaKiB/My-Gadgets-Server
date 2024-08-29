@@ -38,25 +38,3 @@ export const compatibilities: TCompatibility[] = [
   'laptop',
   'macbook',
 ];
-
-export const fieldsToRemove = [
-  'search',
-  'minPrice',
-  'maxPrice',
-  'releasedBefore',
-  'releasedAfter',
-  'connectivity',
-  'compatibility',
-  'os',
-  'minCamera',
-  'maxCamera',
-  'minWeight',
-  'maxWeight',
-  'minDisplaySize',
-  'maxDisplaySize',
-  'minQuantity',
-  'maxQuantity',
-  'sort',
-  'page',
-  'limit',
-];
