@@ -26,7 +26,6 @@ export type TProduct = {
   slug: string;
   model: string;
   quantity: number;
-  cost: number;
   salePrice: number;
   regularPrice: number;
   shippingCost: number;
@@ -37,8 +36,6 @@ export type TProduct = {
   specifications: string;
   brand: Types.ObjectId;
   category: Types.ObjectId;
-  releaseDate: Date;
-  addedBy: Types.ObjectId;
   operatingSystem?: TOperatingSystem;
   connectivity?: TConnectivity[];
   chargingPort?: TChargingPort;
