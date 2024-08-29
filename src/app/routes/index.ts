@@ -3,6 +3,7 @@ import { AuthRouter } from '../modules/auth/auth.route';
 import { CategoryRouter } from '../modules/category/category.route';
 import { BrandRouter } from '../modules/brand/brand.route';
 import { MediaRouter } from '../modules/media/media.route';
+import { ProductRouter } from '../modules/product/product.route';
 
 const MainRouter = Router();
 
@@ -15,6 +16,10 @@ const routes: TRoute[] = [
   {
     path: '/auth',
     router: AuthRouter,
+  },
+  {
+    path: '/product',
+    router: ProductRouter,
   },
   {
     path: '/category',
