@@ -39,7 +39,7 @@ export type TProduct = {
   connectivity?: TConnectivity[];
   chargingPort?: TChargingPort;
   weight?: number;
-  powerSource?: TPowerSource;
+  powerSource?: TPowerSource[];
   camera?: number;
   displaySize?: number;
   compatibility?: TCompatibility[];
