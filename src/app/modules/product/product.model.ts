@@ -89,19 +89,20 @@ const productSchema = new Schema<TProduct>(
         enum: [...connectivities],
       },
     ],
-    chargingPort: [
-      {
-        type: String,
-        enum: [...chargingPorts],
-      },
-    ],
+    chargingPort: {
+      type: String,
+      enum: [...chargingPorts],
+    },
+
     weight: {
       type: Number,
     },
-    powerSource: {
-      type: String,
-      enum: [...powerSources],
-    },
+    powerSource: [
+      {
+        type: String,
+        enum: [...powerSources],
+      },
+    ],
     camera: {
       type: Number,
     },
