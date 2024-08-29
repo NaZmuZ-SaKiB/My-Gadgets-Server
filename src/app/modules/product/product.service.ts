@@ -48,7 +48,7 @@ const getAll = async (filters: Record<string, any>) => {
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
     .limit(limit)
-    .populate(['images']);
+    .populate(['images', 'categories', 'brand']);
 
   const total = await Product.countDocuments({ ...query, ...searchConditions });
 
