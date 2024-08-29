@@ -6,6 +6,13 @@ import {
   TPowerSource,
 } from './product.type';
 
+export const productSearchableFields: string[] = [
+  'name',
+  'model',
+  'description',
+  'shortDescription',
+];
+
 export const operatingSystems: TOperatingSystem[] = [
   'android',
   'ios',
