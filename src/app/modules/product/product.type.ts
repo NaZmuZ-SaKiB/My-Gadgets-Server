@@ -1,5 +1,4 @@
 import { Types } from 'mongoose';
-import { TMedia } from '../media/media.type';
 
 export type TOperatingSystem =
   | 'windows'
@@ -30,12 +29,12 @@ export type TProduct = {
   regularPrice: number;
   shippingCost: number;
   badgeText?: string;
-  images: TMedia[];
+  images: Types.ObjectId[];
   shortDescription: string;
   description: string;
   specifications: string;
   brand: Types.ObjectId;
-  category: Types.ObjectId;
+  categories: Types.ObjectId[];
   operatingSystem?: TOperatingSystem;
   connectivity?: TConnectivity[];
   chargingPort?: TChargingPort;

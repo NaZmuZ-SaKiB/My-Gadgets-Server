@@ -31,11 +31,6 @@ const productSchema = new Schema<TProduct>(
       type: Number,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     salePrice: {
       type: Number,
       required: true,
@@ -48,27 +43,42 @@ const productSchema = new Schema<TProduct>(
       type: Number,
       required: true,
     },
+
     badgeText: String,
+
     images: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Media',
       },
     ],
+    shortDescription: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    specifications: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     brand: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: 'Brand',
     },
-    category: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'Category',
-    },
-    updatedBy: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Category',
+      },
+    ],
     operatingSystem: {
       type: String,
       enum: [...operatingSystems],
@@ -104,6 +114,10 @@ const productSchema = new Schema<TProduct>(
         enum: [...compatibilities],
       },
     ],
+    updatedBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     timestamps: true,
