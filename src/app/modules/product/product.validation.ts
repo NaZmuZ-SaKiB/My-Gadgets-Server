@@ -66,6 +66,11 @@ const create = z.object({
     .optional(),
 });
 
+const remove = z.object({
+  ids: z.array(z.string()).min(1, 'At least one id is required'),
+});
+
 export const ProductValidation = {
   create,
+  remove,
 };
