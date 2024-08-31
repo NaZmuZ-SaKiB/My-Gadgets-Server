@@ -55,6 +55,11 @@ const footerSettingsSchema = new Schema<TFooterSettings>(
       required: true,
       default: '123-456-7890',
     },
+    copyright: {
+      type: String,
+      required: true,
+      default: '© 2024 Your Company. All Rights Reserved.',
+    },
   },
   {
     _id: false,
