@@ -25,7 +25,7 @@ const getAll = async (filters: Record<string, any>) => {
     })),
   };
 
-  const branchs = await Branch.find(searchConditions)
+  const branches = await Branch.find(searchConditions)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
     .limit(limit);
@@ -33,7 +33,7 @@ const getAll = async (filters: Record<string, any>) => {
   const total = await Branch.countDocuments(searchConditions);
 
   return {
-    data: branchs,
+    data: branches,
     meta: {
       page,
       limit,

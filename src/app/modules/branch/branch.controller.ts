@@ -35,7 +35,7 @@ const getAll = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'branchs fetched successfully',
+    message: 'branches fetched successfully',
     data: result.data,
     meta: result.meta,
   });
