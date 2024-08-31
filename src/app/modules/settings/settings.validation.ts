@@ -39,3 +39,7 @@ const update = z.object({
     copyright: z.string().optional(),
   }),
 });
+
+export const SettingsValidation = {
+  update,
+};
