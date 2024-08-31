@@ -5,6 +5,7 @@ import { BrandRouter } from '../modules/brand/brand.route';
 import { MediaRouter } from '../modules/media/media.route';
 import { ProductRouter } from '../modules/product/product.route';
 import { BranchRouter } from '../modules/branch/branch.route';
+import { SettingsRouter } from '../modules/settings/settings.route';
 
 const MainRouter = Router();
 
@@ -37,6 +38,10 @@ const routes: TRoute[] = [
   {
     path: '/branch',
     router: BranchRouter,
+  },
+  {
+    path: '/settings',
+    router: SettingsRouter,
   },
 ];
 

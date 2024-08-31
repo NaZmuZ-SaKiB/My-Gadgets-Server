@@ -17,3 +17,5 @@ router.patch(
   validateRequest(SettingsValidation.update),
   SettingsController.update,
 );
+
+export const SettingsRouter = router;
