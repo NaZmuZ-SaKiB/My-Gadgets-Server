@@ -4,6 +4,7 @@ import { CategoryRouter } from '../modules/category/category.route';
 import { BrandRouter } from '../modules/brand/brand.route';
 import { MediaRouter } from '../modules/media/media.route';
 import { ProductRouter } from '../modules/product/product.route';
+import { BranchRouter } from '../modules/branch/branch.route';
 
 const MainRouter = Router();
 
@@ -32,6 +33,10 @@ const routes: TRoute[] = [
   {
     path: '/media',
     router: MediaRouter,
+  },
+  {
+    path: '/branch',
+    router: BranchRouter,
   },
 ];
 
