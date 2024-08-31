@@ -27,6 +27,7 @@ const homepageSettingsSchema = new Schema<THomepageSettings>(
     ],
     topSellingProducts: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     trendingProducts: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+    description: String,
   },
   {
     _id: false,
