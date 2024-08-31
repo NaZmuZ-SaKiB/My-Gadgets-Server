@@ -18,6 +18,7 @@ export type THomepageSettings = {
   }[];
   topSellingProducts: Types.ObjectId[];
   trendingProducts: Types.ObjectId[];
+  description: string;
 };
 
 export type TFooterSettings = {
