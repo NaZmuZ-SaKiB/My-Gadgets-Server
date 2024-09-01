@@ -5,6 +5,7 @@ import { TProduct } from './product.type';
 import calculatePagination from '../../utils/calculatePagination';
 import { productSearchableFields } from './product.constant';
 import { generateProductQuery } from './product.utils';
+import { FilterQuery } from 'mongoose';
 
 const create = async (userId: string, payload: TProduct) => {
   await Product.create({ ...payload, updatedBy: userId });
@@ -36,9 +37,30 @@ const getAll = async (filters: Record<string, any>) => {
   const { page, limit, skip, sort, sortOrder } = calculatePagination(filters);
 
   // handle search
+
+  // const searchConditions = {
+  //   $or: productSearchableFields.map((field) => ({
+  //     [field]: { $regex: filters?.searchTerm ?? '', $options: 'i' },
+  //   })),
+  // };
   const searchConditions = {
     $or: productSearchableFields.map((field) => ({
-      [field]: { $regex: filters?.searchTerm ?? '', $options: 'i' },
+      $or: [
+        {
+          $expr: {
+            $regexMatch: {
+              input: {
+                $replaceAll: { input: `$${field}`, find: ' ', replacement: '' },
+              },
+              regex: filters?.searchTerm || '',
+              options: 'i',
+            },
+          },
+        },
+        {
+          [field]: { $regex: filters?.searchTerm ?? '', $options: 'i' },
+        },
+      ],
     })),
   };
 
