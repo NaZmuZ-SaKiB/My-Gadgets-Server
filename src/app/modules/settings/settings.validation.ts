@@ -22,7 +22,7 @@ const update = z.object({
         .array(
           z.object({
             product: z.string(),
-            endDate: z.date(),
+            endDate: z.any(),
           }),
         )
         .optional(),
