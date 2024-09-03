@@ -2,7 +2,32 @@ import Settings from './settings.model';
 import { TSettings } from './settings.type';
 
 const get = async () => {
-  const settings = await Settings.findOne();
+  const settings = await Settings.findOne()
+    .populate(['homepage.featuredCategories', 'homepage.featuredBrands'])
+    .populate([
+      {
+        path: 'homepage.popularProducts',
+        populate: {
+          path: 'images',
+        },
+      },
+      {
+        path: 'homepage.topSellingProducts',
+        populate: {
+          path: 'images',
+        },
+      },
+      {
+        path: 'homepage.trendingProducts',
+        populate: {
+          path: 'images',
+        },
+      },
+      {
+        path: 'homepage.featuredProducts',
+        populate: ['banner', 'products'],
+      },
+    ]);
 
   return settings;
 };
