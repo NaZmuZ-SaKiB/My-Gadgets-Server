@@ -3,7 +3,14 @@ import { TSettings } from './settings.type';
 
 const get = async () => {
   const settings = await Settings.findOne()
-    .populate(['homepage.featuredCategories', 'homepage.featuredBrands'])
+    .populate([
+      'homepage.sliderImages',
+      'homepage.bannerImage1',
+      'homepage.bannerImage2',
+      'homepage.bannerImage3',
+      'homepage.featuredCategories',
+      'homepage.featuredBrands',
+    ])
     .populate([
       {
         path: 'homepage.popularProducts',
@@ -25,7 +32,22 @@ const get = async () => {
       },
       {
         path: 'homepage.featuredProducts',
-        populate: ['banner', 'products'],
+        populate: [
+          {
+            path: 'banner',
+          },
+          {
+            path: 'products',
+            populate: 'images',
+          },
+        ],
+      },
+      {
+        path: 'homepage.flashSale',
+        populate: {
+          path: 'product',
+          populate: 'images',
+        },
       },
     ]);
 
