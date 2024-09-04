@@ -8,10 +8,13 @@ const get = async () => {
       'homepage.bannerImage1',
       'homepage.bannerImage2',
       'homepage.bannerImage3',
-      'homepage.featuredCategories',
       'homepage.featuredBrands',
     ])
     .populate([
+      {
+        path: 'homepage.featuredCategories',
+        populate: 'image',
+      },
       {
         path: 'homepage.popularProducts',
         populate: {
