@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { TReview } from './review.type';
+import { REVIEW_STATUS, reviewStatuses } from './review.constant';
 
 const reviewSchema = new Schema<TReview>(
   {
@@ -20,6 +21,11 @@ const reviewSchema = new Schema<TReview>(
     comment: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      enum: [...reviewStatuses],
+      default: REVIEW_STATUS.PENDING,
     },
   },
   {
