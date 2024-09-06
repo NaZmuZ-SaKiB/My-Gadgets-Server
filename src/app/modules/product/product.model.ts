@@ -115,6 +115,12 @@ const productSchema = new Schema<TProduct>(
         enum: [...compatibilities],
       },
     ],
+    reviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Review',
+      },
+    ],
     updatedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
