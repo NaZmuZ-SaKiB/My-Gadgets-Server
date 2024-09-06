@@ -11,6 +11,15 @@ const create = async (userId: string, payload: TReview) => {
   return null;
 };
 
+const update = async (id: string, payload: Partial<TReview>) => {
+  await Review.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+
+  return null;
+};
+
 const getAll = async (filters: Record<string, any>) => {
   const { page, limit, skip, sort, sortOrder } = calculatePagination(filters);
 
@@ -21,7 +30,7 @@ const getAll = async (filters: Record<string, any>) => {
     .populate([
       {
         path: 'product',
-        select: 'name _id',
+        select: 'name slug _id',
       },
       {
         path: 'user',
@@ -40,7 +49,30 @@ const getAll = async (filters: Record<string, any>) => {
   };
 };
 
+const getById = async (id: string) => {
+  const review = await Review.findById(id).populate([
+    {
+      path: 'product',
+      select: 'name _id slug',
+    },
+    {
+      path: 'user',
+    },
+  ]);
+
+  return review;
+};
+
+const remove = async (ids: string[]) => {
+  await Review.deleteMany({ _id: { $in: ids } });
+
+  return null;
+};
+
 export const ReviewService = {
   create,
+  update,
   getAll,
+  getById,
+  remove,
 };
