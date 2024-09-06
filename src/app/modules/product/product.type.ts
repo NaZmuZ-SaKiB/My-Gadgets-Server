@@ -43,6 +43,7 @@ export type TProduct = {
   camera?: number;
   displaySize?: number;
   compatibility?: TCompatibility[];
+  reviews: Types.ObjectId[];
 
   createdAt?: Date;
   updatedAt?: Date;
