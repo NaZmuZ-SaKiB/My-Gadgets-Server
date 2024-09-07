@@ -1,8 +1,10 @@
 import calculatePagination from '../../utils/calculatePagination';
+import { REVIEW_STATUS } from './review.constant';
 import Review from './review.model';
 import { TReview } from './review.type';
 
 const create = async (userId: string, payload: TReview) => {
+  console.log(userId);
   await Review.create({
     ...payload,
     user: userId,
@@ -63,6 +65,19 @@ const getById = async (id: string) => {
   return review;
 };
 
+const getAllByProductId = async (productId: string) => {
+  const reviews = await Review.find({
+    product: productId,
+    status: REVIEW_STATUS.APPROVED,
+  }).populate([
+    {
+      path: 'user',
+    },
+  ]);
+
+  return reviews;
+};
+
 const remove = async (ids: string[]) => {
   await Review.deleteMany({ _id: { $in: ids } });
 
@@ -75,4 +90,5 @@ export const ReviewService = {
   getAll,
   getById,
   remove,
+  getAllByProductId,
 };
