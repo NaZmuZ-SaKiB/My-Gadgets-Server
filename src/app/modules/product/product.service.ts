@@ -88,7 +88,6 @@ const getById = async (id: string) => {
     'categories',
     'brand',
     'images',
-    'reviews',
     'updatedBy',
   ]);
 
