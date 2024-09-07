@@ -14,6 +14,8 @@ router.get(
   ReviewController.getAll,
 );
 
+router.get('/product/:productId', ReviewController.getAllByProductId);
+
 router.get(
   '/:id',
   auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
