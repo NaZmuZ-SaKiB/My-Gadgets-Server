@@ -5,7 +5,6 @@ import { TProduct } from './product.type';
 import calculatePagination from '../../utils/calculatePagination';
 import { productSearchableFields } from './product.constant';
 import { generateProductQuery } from './product.utils';
-import { FilterQuery } from 'mongoose';
 
 const create = async (userId: string, payload: TProduct) => {
   await Product.create({ ...payload, updatedBy: userId });
@@ -89,6 +88,7 @@ const getById = async (id: string) => {
     'categories',
     'brand',
     'images',
+    'reviews',
     'updatedBy',
   ]);
 
