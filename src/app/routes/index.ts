@@ -6,6 +6,7 @@ import { MediaRouter } from '../modules/media/media.route';
 import { ProductRouter } from '../modules/product/product.route';
 import { BranchRouter } from '../modules/branch/branch.route';
 import { SettingsRouter } from '../modules/settings/settings.route';
+import { ReviewRouter } from '../modules/review/review.route';
 
 const MainRouter = Router();
 
@@ -22,6 +23,10 @@ const routes: TRoute[] = [
   {
     path: '/product',
     router: ProductRouter,
+  },
+  {
+    path: '/review',
+    router: ReviewRouter,
   },
   {
     path: '/category',
