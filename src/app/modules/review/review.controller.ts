@@ -4,7 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import { ReviewService } from './review.service';
 
 const create = catchAsync(async (req, res) => {
-  const result = await ReviewService.create(req.user?.id, req.body);
+  const result = await ReviewService.create(req.user?._id, req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
@@ -48,6 +48,17 @@ const getById = catchAsync(async (req, res) => {
   });
 });
 
+const getAllByProductId = catchAsync(async (req, res) => {
+  const result = await ReviewService.getAllByProductId(req.params.productId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Reviews fetched successfully.',
+    data: result,
+  });
+});
+
 const remove = catchAsync(async (req, res) => {
   const result = await ReviewService.remove(req.body.ids);
 
@@ -64,5 +75,6 @@ export const ReviewController = {
   update,
   getAll,
   getById,
+  getAllByProductId,
   remove,
 };
