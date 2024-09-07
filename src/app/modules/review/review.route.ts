@@ -43,3 +43,5 @@ router.delete(
   validateRequest(ReviewValidation.remove),
   ReviewController.remove,
 );
+
+export const ReviewRouter = router;
