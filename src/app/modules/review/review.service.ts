@@ -1,5 +1,6 @@
+import { FilterQuery } from 'mongoose';
 import calculatePagination from '../../utils/calculatePagination';
-import { REVIEW_STATUS } from './review.constant';
+import { REVIEW_STATUS, reviewStatuses } from './review.constant';
 import Review from './review.model';
 import { TReview } from './review.type';
 
@@ -24,6 +25,14 @@ const update = async (id: string, payload: Partial<TReview>) => {
 
 const getAll = async (filters: Record<string, any>) => {
   const { page, limit, skip, sort, sortOrder } = calculatePagination(filters);
+
+  const query: FilterQuery<TReview> = {
+    status: REVIEW_STATUS.PENDING,
+  };
+
+  if (filters.status && reviewStatuses.includes(filters.status)) {
+    query.status = filters.status;
+  }
 
   const reviews = await Review.find()
     .sort({ [sort]: sortOrder } as any)
