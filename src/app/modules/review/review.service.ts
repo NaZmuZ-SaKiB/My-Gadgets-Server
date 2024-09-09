@@ -5,7 +5,6 @@ import Review from './review.model';
 import { TReview } from './review.type';
 
 const create = async (userId: string, payload: TReview) => {
-  console.log(userId);
   await Review.create({
     ...payload,
     user: userId,
