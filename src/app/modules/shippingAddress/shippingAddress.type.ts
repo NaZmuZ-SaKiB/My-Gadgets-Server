@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { Types } from 'mongoose';
 
 export type TShippingAddress = {
   user: Types.ObjectId;
@@ -9,5 +9,8 @@ export type TShippingAddress = {
   division: string;
   zipCode: string;
   phone: string;
-  selected: boolean;
+  default: boolean;
+
+  createdAt: Date;
+  updatedAt: Date;
 };
