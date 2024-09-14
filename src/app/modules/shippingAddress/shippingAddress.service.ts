@@ -97,3 +97,11 @@ const remove = async (userId: string, shippingAddressId: string) => {
 
   return null;
 };
+
+export const ShippingAddressService = {
+  create,
+  update,
+  getAll,
+  getById,
+  remove,
+};
