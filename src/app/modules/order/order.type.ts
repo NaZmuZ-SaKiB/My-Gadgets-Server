@@ -9,7 +9,7 @@ export type TOrderItem = {
   product: Types.ObjectId;
 };
 
-export type TPaymentMethod = 'cash' | 'stripe';
+export type TPaymentMethod = 'cash-on-delivery' | 'stripe' | 'bank-transfer';
 
 export type TOrderStatus = 'pending' | 'processing' | 'completed' | 'cancelled';
 
