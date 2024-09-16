@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { TOrder, TOrderItem } from './order.type';
 import { ORDER_STATUS, orderStatuses, paymentMethods } from './order.constant';
 
@@ -81,3 +81,7 @@ const orderSchema = new Schema<TOrder>(
     timestamps: true,
   },
 );
+
+const Order = model<TOrder>('Order', orderSchema);
+
+export default Order;
