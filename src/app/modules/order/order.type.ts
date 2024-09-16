@@ -26,6 +26,7 @@ export type TOrder = {
   paidAt: Date;
   completedAt: Date;
   status: TOrderStatus;
+  cancelRequested?: boolean;
 
   createdAt: Date;
   updatedAt: Date;
