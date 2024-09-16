@@ -76,7 +76,12 @@ const orderSchema = new Schema<TOrder>(
       required: true,
       default: ORDER_STATUS.PENDING,
     },
+    cancelRequested: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   {
     timestamps: true,
   },
