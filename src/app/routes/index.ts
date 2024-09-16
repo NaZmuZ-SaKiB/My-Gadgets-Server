@@ -7,6 +7,7 @@ import { ProductRouter } from '../modules/product/product.route';
 import { BranchRouter } from '../modules/branch/branch.route';
 import { SettingsRouter } from '../modules/settings/settings.route';
 import { ReviewRouter } from '../modules/review/review.route';
+import { ShippingAddressRouter } from '../modules/shippingAddress/shippingAddress.route';
 
 const MainRouter = Router();
 
@@ -47,6 +48,10 @@ const routes: TRoute[] = [
   {
     path: '/settings',
     router: SettingsRouter,
+  },
+  {
+    path: '/shipping-address',
+    router: ShippingAddressRouter,
   },
 ];
 
