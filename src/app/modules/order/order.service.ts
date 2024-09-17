@@ -55,6 +55,10 @@ const getAll = async (filters: Record<string, any>) => {
     conditions.isPaid = true;
   }
 
+  if (filters?.user) {
+    conditions.user = filters?.user;
+  }
+
   const orders = await Order.find(conditions)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
