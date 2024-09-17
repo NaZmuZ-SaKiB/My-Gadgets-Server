@@ -9,6 +9,7 @@ export const paymentMethods: TPaymentMethod[] = [
 export const orderStatuses: TOrderStatus[] = [
   'pending',
   'processing',
+  'shipped',
   'completed',
   'cancelled',
 ];
@@ -16,6 +17,7 @@ export const orderStatuses: TOrderStatus[] = [
 export const ORDER_STATUS = {
   PENDING: 'pending',
   PROCESSING: 'processing',
+  SHIPPED: 'shipped',
   COMPLETED: 'completed',
   CANCELLED: 'cancelled',
 } as const;
