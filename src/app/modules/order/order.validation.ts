@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { paymentMethods } from './order.constant';
+import { orderStatuses, paymentMethods } from './order.constant';
 
 const orderItem = z.object({
   name: z.string({
@@ -48,6 +48,14 @@ const create = z.object({
   paidAt: z.date().optional(),
 });
 
+const update = z.object({
+  shippingAddress: z.string().optional(),
+  isPaid: z.boolean().optional(),
+  status: z.enum([...(orderStatuses as [string, ...string[]])]).optional(),
+  cancelRequested: z.boolean().optional(),
+});
+
 export const OrderValidation = {
   create,
+  update,
 };
