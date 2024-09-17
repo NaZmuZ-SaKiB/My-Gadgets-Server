@@ -71,3 +71,12 @@ const getAll = async (filters: Record<string, any>) => {
     },
   };
 };
+
+const getById = async (orderId: string) => {
+  const order = await Order.findById(orderId).populate([
+    'user',
+    'shippingAddress',
+  ]);
+
+  return order;
+};
