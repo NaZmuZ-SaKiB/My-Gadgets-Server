@@ -11,7 +11,12 @@ export type TOrderItem = {
 
 export type TPaymentMethod = 'cash-on-delivery' | 'stripe' | 'bank-transfer';
 
-export type TOrderStatus = 'pending' | 'processing' | 'completed' | 'cancelled';
+export type TOrderStatus =
+  | 'pending'
+  | 'processing'
+  | 'shipped'
+  | 'completed'
+  | 'cancelled';
 
 export type TOrder = {
   user: Types.ObjectId;
