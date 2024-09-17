@@ -24,3 +24,33 @@ const update = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+const getAll = catchAsync(async (req, res) => {
+  const result = await OrderServices.getAll(req.query);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Orders fetched successfully.',
+    data: result.data,
+    meta: result.meta,
+  });
+});
+
+const getById = catchAsync(async (req, res) => {
+  const result = await OrderServices.getById(req.params?.id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Order fetched.',
+    data: result,
+  });
+});
+
+export const OrderController = {
+  create,
+  update,
+  getAll,
+  getById,
+};
