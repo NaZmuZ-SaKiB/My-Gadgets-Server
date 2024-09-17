@@ -80,3 +80,10 @@ const getById = async (orderId: string) => {
 
   return order;
 };
+
+export const OrderServices = {
+  create,
+  update,
+  getAll,
+  getById,
+};
