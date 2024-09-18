@@ -1,4 +1,4 @@
-import { TOrderStatus, TPaymentMethod } from './order.type';
+import { TDeliveryOption, TOrderStatus, TPaymentMethod } from './order.type';
 
 export const paymentMethods: TPaymentMethod[] = [
   'cash-on-delivery',
@@ -13,6 +13,8 @@ export const orderStatuses: TOrderStatus[] = [
   'completed',
   'cancelled',
 ];
+
+export const orderDeliveryOptions: TDeliveryOption[] = ['pickup', 'delivery'];
 
 export const ORDER_STATUS = {
   PENDING: 'pending',
