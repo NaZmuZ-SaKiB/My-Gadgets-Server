@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { orderStatuses, paymentMethods } from './order.constant';
+import {
+  orderDeliveryOptions,
+  orderStatuses,
+  paymentMethods,
+} from './order.constant';
 
 const orderItem = z.object({
   name: z.string({
@@ -46,6 +50,9 @@ const create = z.object({
   transactionId: z.string().optional(),
   isPaid: z.boolean().optional(),
   paidAt: z.date().optional(),
+  deliveryOption: z.enum([...(orderDeliveryOptions as [string, ...string[]])], {
+    required_error: 'Delivery Option is required',
+  }),
 });
 
 const update = z.object({
