@@ -11,7 +11,7 @@ router.get('/', auth(), ShippingAddressController.getAll);
 router.get('/:id', auth(), ShippingAddressController.getById);
 
 // POST
-router.get(
+router.post(
   '/',
   auth(),
   validateRequest(ShippingAddressValidation.create),
