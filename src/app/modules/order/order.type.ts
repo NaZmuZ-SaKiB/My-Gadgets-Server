@@ -18,6 +18,8 @@ export type TOrderStatus =
   | 'completed'
   | 'cancelled';
 
+export type TDeliveryOption = 'pickup' | 'delivery';
+
 export type TOrder = {
   user: Types.ObjectId;
   orderItems: TOrderItem[];
@@ -32,6 +34,7 @@ export type TOrder = {
   completedAt: Date;
   status: TOrderStatus;
   cancelRequested?: boolean;
+  deliveryOption: TDeliveryOption;
 
   createdAt: Date;
   updatedAt: Date;
