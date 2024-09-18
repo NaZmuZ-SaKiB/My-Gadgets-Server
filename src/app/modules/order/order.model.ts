@@ -1,6 +1,11 @@
 import { model, Schema } from 'mongoose';
 import { TOrder, TOrderItem } from './order.type';
-import { ORDER_STATUS, orderStatuses, paymentMethods } from './order.constant';
+import {
+  ORDER_STATUS,
+  orderDeliveryOptions,
+  orderStatuses,
+  paymentMethods,
+} from './order.constant';
 
 const orderItemSchema = new Schema<TOrderItem>(
   {
@@ -79,6 +84,11 @@ const orderSchema = new Schema<TOrder>(
     cancelRequested: {
       type: Boolean,
       default: false,
+    },
+    deliveryOption: {
+      type: String,
+      enum: orderDeliveryOptions,
+      required: true,
     },
   },
 
