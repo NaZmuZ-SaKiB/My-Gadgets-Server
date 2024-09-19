@@ -57,6 +57,8 @@ const create = z.object({
 
 const update = z.object({
   shippingAddress: z.string().optional(),
+  transactionId: z.string().optional(),
+  paymentResult: z.string().optional(),
   isPaid: z.boolean().optional(),
   status: z.enum([...(orderStatuses as [string, ...string[]])]).optional(),
   cancelRequested: z.boolean().optional(),
