@@ -7,12 +7,12 @@ import calculatePagination from '../../utils/calculatePagination';
 import { FilterQuery } from 'mongoose';
 
 const create = async (userId: string, payload: TOrder) => {
-  await Order.create({
+  const order = await Order.create({
     ...payload,
     user: userId,
   });
 
-  return null;
+  return order;
 };
 
 const update = async (orderId: string, payload: Partial<TOrder>) => {
