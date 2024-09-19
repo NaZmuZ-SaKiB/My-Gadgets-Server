@@ -19,7 +19,7 @@ router.post(
 );
 
 // PATCH
-router.post(
+router.patch(
   '/:id',
   auth(),
   validateRequest(OrderValidation.update),
