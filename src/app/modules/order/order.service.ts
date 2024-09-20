@@ -39,7 +39,7 @@ const create = async (userId: string, payload: TOrder) => {
     await session.abortTransaction();
     await session.endSession();
 
-    throw new AppError(httpStatus.BAD_REQUEST, error.message);
+    throw new AppError(httpStatus.BAD_REQUEST, error?.message);
   }
 };
 
@@ -61,7 +61,34 @@ const update = async (orderId: string, payload: Partial<TOrder>) => {
     payload.completedAt = new Date();
   }
 
-  await Order.findByIdAndUpdate(orderId, payload, { runValidators: true });
+  const session = await startSession();
+
+  try {
+    session.startTransaction();
+
+    await Order.findByIdAndUpdate(orderId, payload, {
+      runValidators: true,
+      session,
+    });
+
+    if (payload.status === ORDER_STATUS.CANCELLED) {
+      for (const item of order.orderItems) {
+        await Product.findByIdAndUpdate(
+          item.product,
+          { $inc: { quantity: item.quantity } },
+          { session },
+        );
+      }
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error: any) {
+    await session.abortTransaction();
+    await session.endSession();
+
+    throw new AppError(httpStatus.BAD_REQUEST, error?.message);
+  }
 
   return null;
 };
