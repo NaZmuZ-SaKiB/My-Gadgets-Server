@@ -4,15 +4,43 @@ import Order from './order.model';
 import { TOrder } from './order.type';
 import { ORDER_STATUS } from './order.constant';
 import calculatePagination from '../../utils/calculatePagination';
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, startSession } from 'mongoose';
+import { Product } from '../product/product.model';
 
 const create = async (userId: string, payload: TOrder) => {
-  const order = await Order.create({
-    ...payload,
-    user: userId,
-  });
+  const session = await startSession();
 
-  return order;
+  try {
+    session.startTransaction();
+
+    const order = await Order.create(
+      [
+        {
+          ...payload,
+          user: userId,
+        },
+      ],
+      { session },
+    );
+
+    for (const item of payload.orderItems) {
+      await Product.findByIdAndUpdate(
+        item.product,
+        { $inc: { quantity: -item.quantity } },
+        { session },
+      );
+    }
+
+    await session.commitTransaction();
+    await session.endSession();
+
+    return order[0];
+  } catch (error: any) {
+    await session.abortTransaction();
+    await session.endSession();
+
+    throw new AppError(httpStatus.BAD_REQUEST, error.message);
+  }
 };
 
 const update = async (orderId: string, payload: Partial<TOrder>) => {
