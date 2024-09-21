@@ -117,7 +117,8 @@ const getAll = async (filters: Record<string, any>) => {
   const orders = await Order.find(conditions)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .populate(['user', 'shippingAddress']);
 
   const total = await Order.countDocuments(conditions);
 
