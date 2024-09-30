@@ -7,6 +7,12 @@ import { TUser } from '../user/user.type';
 import { USER_ROLE } from '../user/user.constant';
 import User from '../user/user.model';
 
+const currentUser = async (id: string) => {
+  const user = await User.findById(id);
+
+  return user;
+};
+
 const signUp = async (payload: TUser) => {
   if (payload.role !== USER_ROLE.USER) {
     throw new AppError(
@@ -64,6 +70,7 @@ const signIn = async (payload: { email: string; password: string }) => {
 };
 
 export const AuthService = {
+  currentUser,
   signUp,
   signIn,
 };
