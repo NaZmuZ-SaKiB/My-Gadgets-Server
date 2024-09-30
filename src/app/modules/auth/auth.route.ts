@@ -2,10 +2,12 @@ import { Router } from 'express';
 import validateRequest from '../../middlewares/validateRequest';
 import { AuthValidation } from './auth.validation';
 import { AuthController } from './auth.controller';
+import auth from '../../middlewares/auth';
 
 const router = Router();
 
 // GET
+router.get('/me', auth(), AuthController.currentUser);
 
 // POST
 router.post(
