@@ -9,6 +9,7 @@ import { SettingsRouter } from '../modules/settings/settings.route';
 import { ReviewRouter } from '../modules/review/review.route';
 import { ShippingAddressRouter } from '../modules/shippingAddress/shippingAddress.route';
 import { OrderRouter } from '../modules/order/order.route';
+import { UserRouter } from '../modules/user/user.route';
 
 const MainRouter = Router();
 
@@ -21,6 +22,10 @@ const routes: TRoute[] = [
   {
     path: '/auth',
     router: AuthRouter,
+  },
+  {
+    path: '/user',
+    router: UserRouter,
   },
   {
     path: '/product',
