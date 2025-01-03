@@ -44,7 +44,7 @@ const update = async (
 
     if (payload.default) {
       await ShippingAddress.updateMany(
-        { user: userId },
+        { user: userId, default: true },
         { default: false },
         { runValidators: true, session },
       );
