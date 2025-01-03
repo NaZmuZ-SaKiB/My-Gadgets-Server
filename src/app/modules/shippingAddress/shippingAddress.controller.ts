@@ -22,7 +22,7 @@ const update = catchAsync(async (req, res) => {
   );
 
   sendResponse(res, {
-    statusCode: httpStatus.NO_CONTENT,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'Shipping address updated successfully.',
     data: result,
