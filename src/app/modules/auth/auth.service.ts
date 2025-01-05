@@ -85,7 +85,7 @@ const changePassword = async (
   );
 
   if (!isPasswordCorrect) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid email or password.');
+    throw new AppError(httpStatus.BAD_REQUEST, 'Incorrect old password.');
   }
 
   const newPassword = await bcrypt.hash(
