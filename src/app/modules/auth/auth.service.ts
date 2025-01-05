@@ -69,8 +69,38 @@ const signIn = async (payload: { email: string; password: string }) => {
   return { user, token };
 };
 
+const changePassword = async (
+  userId: string,
+  payload: { oldPassword: string; newPassword: string },
+) => {
+  const user = await User.findById(userId).select('+password');
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found.');
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(
+    payload.oldPassword,
+    user.password,
+  );
+
+  if (!isPasswordCorrect) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid email or password.');
+  }
+
+  const newPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.bcrypt_salt_rounds),
+  );
+
+  await User.findByIdAndUpdate(userId, { password: newPassword });
+
+  return null;
+};
+
 export const AuthService = {
   currentUser,
   signUp,
   signIn,
+  changePassword,
 };
