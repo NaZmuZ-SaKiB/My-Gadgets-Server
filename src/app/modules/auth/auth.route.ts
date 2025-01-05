@@ -22,6 +22,12 @@ router.post(
 );
 
 // PATCH
+router.patch(
+  '/change-password',
+  auth(),
+  validateRequest(AuthValidation.changePassword),
+  AuthController.changePassword,
+);
 
 // DELETE
 
