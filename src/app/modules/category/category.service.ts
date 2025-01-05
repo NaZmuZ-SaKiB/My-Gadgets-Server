@@ -5,6 +5,7 @@ import { categorySearchableFields } from './category.constant';
 import Category from './category.model';
 import { TCategory } from './category.type';
 import { FilterQuery, startSession, Types } from 'mongoose';
+import { Product } from '../product/product.model';
 
 const create = async (userId: string, payload: TCategory) => {
   let parentCatrgory = null;
@@ -262,7 +263,11 @@ const remove = async (ids: string[]) => {
       { session },
     );
 
-    // TODO: remove products
+    await Product.updateMany(
+      { categories: { $in: ids } },
+      { $pull: { categories: { $in: ids } } },
+      { session },
+    );
 
     await session.commitTransaction();
     await session.endSession();
