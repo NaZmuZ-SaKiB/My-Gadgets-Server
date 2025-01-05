@@ -32,7 +32,18 @@ const signIn = z.object({
     })
     .email('Invalid email format'),
 
-  password: z
+  password: z.string({
+    required_error: 'Password is required',
+    invalid_type_error: 'Password must be a string',
+  }),
+});
+
+const changePassword = z.object({
+  oldPassword: z.string({
+    required_error: 'Password is required',
+    invalid_type_error: 'Password must be a string',
+  }),
+  newPassword: z
     .string({
       required_error: 'Password is required',
       invalid_type_error: 'Password must be a string',
@@ -43,4 +54,5 @@ const signIn = z.object({
 export const AuthValidation = {
   signUp,
   signIn,
+  changePassword,
 };
