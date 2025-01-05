@@ -4,6 +4,7 @@ import calculatePagination from '../../utils/calculatePagination';
 import { brandSearchableFields } from './brand.constant';
 import Brand from './brand.model';
 import { TBrand } from './brand.type';
+import { Product } from '../product/product.model';
 
 const create = async (userId: string, payload: TBrand) => {
   await Brand.create({ ...payload, updatedBy: userId });
@@ -74,6 +75,17 @@ const toggleFeatured = async (id: string) => {
 };
 
 const remove = async (ids: string[]) => {
+  const product = await Product.findOne({ brand: { $in: ids } })
+    .select('_id brand')
+    .populate('brand');
+
+  if (product) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `Brand ${(product.brand as unknown as TBrand).name} is associated with products. Please remove the products first.`,
+    );
+  }
+
   await Brand.deleteMany({ _id: { $in: ids } });
 
   return null;
