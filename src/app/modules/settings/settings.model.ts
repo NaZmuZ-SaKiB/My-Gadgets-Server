@@ -1,5 +1,10 @@
 import { model, Schema } from 'mongoose';
-import { TFooterSettings, THomepageSettings, TSettings } from './settings.type';
+import {
+  TCategorySettings,
+  TFooterSettings,
+  THomepageSettings,
+  TSettings,
+} from './settings.type';
 
 const homepageSettingsSchema = new Schema<THomepageSettings>(
   {
@@ -28,6 +33,16 @@ const homepageSettingsSchema = new Schema<THomepageSettings>(
     topSellingProducts: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     trendingProducts: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     description: String,
+  },
+  {
+    _id: false,
+  },
+);
+
+const categorySettingsSchema = new Schema<TCategorySettings>(
+  {
+    showOnTopMenu: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+    featured: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   },
   {
     _id: false,
@@ -69,6 +84,7 @@ const footerSettingsSchema = new Schema<TFooterSettings>(
 
 const settingsSchema = new Schema<TSettings>({
   homepage: homepageSettingsSchema,
+  category: categorySettingsSchema,
   footer: footerSettingsSchema,
 });
 
