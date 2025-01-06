@@ -29,7 +29,13 @@ export type TFooterSettings = {
   copyright: string;
 };
 
+export type TCategorySettings = {
+  showOnTopMenu: Types.ObjectId[];
+  featured: Types.ObjectId[];
+};
+
 export type TSettings = {
   homepage: THomepageSettings;
+  category: TCategorySettings;
   footer: TFooterSettings;
 };
