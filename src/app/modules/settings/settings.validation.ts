@@ -33,6 +33,13 @@ const update = z.object({
     })
     .optional(),
 
+  category: z
+    .object({
+      showOnTopMenu: z.array(z.string()).optional(),
+      featured: z.array(z.string()).optional(),
+    })
+    .optional(),
+
   footer: z
     .object({
       slogan: z.string().optional(),
