@@ -9,6 +9,8 @@ const get = async () => {
       'homepage.bannerImage2',
       'homepage.bannerImage3',
       'homepage.featuredBrands',
+      'category.showOnTopMenu',
+      'category.featured',
     ])
     .populate([
       {
