@@ -20,7 +20,7 @@ const signUp = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
-    message: 'User sign up successful.',
+    message: 'Sign up successful.',
     data: result,
   });
 });
@@ -31,7 +31,7 @@ const signIn = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'User sign in successful.',
+    message: 'Log in successful.',
     data: result,
   });
 });
