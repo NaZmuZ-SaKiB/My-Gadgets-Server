@@ -3,6 +3,17 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { UserService } from './user.service';
 
+const createAdmin = catchAsync(async (req, res) => {
+  const result = await UserService.createAdmin(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'New Admin created',
+    data: result,
+  });
+});
+
 const update = catchAsync(async (req, res) => {
   const result = await UserService.update(req?.user?._id, req.body);
 
@@ -15,5 +26,6 @@ const update = catchAsync(async (req, res) => {
 });
 
 export const UserController = {
+  createAdmin,
   update,
 };
