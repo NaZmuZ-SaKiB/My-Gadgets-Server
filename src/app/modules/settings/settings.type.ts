@@ -31,7 +31,6 @@ export type TFooterSettings = {
 
 export type TCategorySettings = {
   showOnTopMenu: Types.ObjectId[];
-  featured: Types.ObjectId[];
 };
 
 export type TSettings = {

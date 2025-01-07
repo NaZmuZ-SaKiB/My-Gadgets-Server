@@ -42,7 +42,6 @@ const homepageSettingsSchema = new Schema<THomepageSettings>(
 const categorySettingsSchema = new Schema<TCategorySettings>(
   {
     showOnTopMenu: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
-    featured: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   },
   {
     _id: false,

@@ -36,7 +36,6 @@ const update = z.object({
   category: z
     .object({
       showOnTopMenu: z.array(z.string()).optional(),
-      featured: z.array(z.string()).optional(),
     })
     .optional(),
 

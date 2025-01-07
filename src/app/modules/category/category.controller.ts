@@ -63,28 +63,6 @@ const getById = catchAsync(async (req, res) => {
   });
 });
 
-const toggleFeatured = catchAsync(async (req, res) => {
-  const result = await CategoryService.toggleFeatured(req.params?.id);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Featured updated successfully',
-    data: result,
-  });
-});
-
-const toggleShowOnTopMenu = catchAsync(async (req, res) => {
-  const result = await CategoryService.toggleShowOnTopMenu(req.params?.id);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Show on top menu updated successfully',
-    data: result,
-  });
-});
-
 const remove = catchAsync(async (req, res) => {
   const result = await CategoryService.remove(req.body?.ids);
 
@@ -102,7 +80,5 @@ export const CategoryController = {
   getAll,
   getAllWithSubCats,
   getById,
-  toggleFeatured,
-  toggleShowOnTopMenu,
   remove,
 };

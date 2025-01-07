@@ -55,7 +55,6 @@ const homePopulate2 = [
 
 const categoryPopulate = [
   { path: 'category.showOnTopMenu', populate: 'subCategories' },
-  { path: 'category.featured', populate: 'subCategories' },
 ];
 
 const get = async (type: string) => {

@@ -177,61 +177,6 @@ const getById = async (id: string) => {
   return category;
 };
 
-const toggleFeatured = async (id: string) => {
-  const featuredCount = await Category.countDocuments({ featured: true });
-
-  const category = await Category.findById(id);
-
-  if (!category) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Category not found.');
-  }
-
-  if (!category.featured) {
-    if (featuredCount >= 12) {
-      throw new AppError(
-        httpStatus.BAD_REQUEST,
-        'Only 12 categories can be featured at a time.',
-      );
-    }
-
-    if (!category.image) {
-      throw new AppError(
-        httpStatus.BAD_REQUEST,
-        'Category must have an image to be featured.',
-      );
-    }
-  }
-
-  category.featured = !category.featured;
-  await category.save();
-
-  return null;
-};
-
-const toggleShowOnTopMenu = async (id: string) => {
-  const showOnTopMenuCount = await Category.countDocuments({
-    showOnTopMenu: true,
-  });
-
-  const category = await Category.findById(id);
-
-  if (!category) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Category not found.');
-  }
-
-  if (!category.showOnTopMenu && showOnTopMenuCount >= 8) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Only 8 categories can be shown on top menu at a time.',
-    );
-  }
-
-  category.showOnTopMenu = !category.showOnTopMenu;
-  await category.save();
-
-  return null;
-};
-
 const remove = async (ids: string[]) => {
   const categories = await Category.find({ _id: { $in: ids } });
 
@@ -290,7 +235,5 @@ export const CategoryService = {
   getAll,
   getAllWithSubCats,
   getById,
-  toggleFeatured,
-  toggleShowOnTopMenu,
   remove,
 };

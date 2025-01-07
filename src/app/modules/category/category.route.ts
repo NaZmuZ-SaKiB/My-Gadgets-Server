@@ -35,16 +35,6 @@ router.patch(
   validateRequest(CategoryValidation.create.partial()),
   CategoryController.update,
 );
-router.patch(
-  '/:id/featured',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
-  CategoryController.toggleFeatured,
-);
-router.patch(
-  '/:id/show-on-top-menu',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
-  CategoryController.toggleShowOnTopMenu,
-);
 
 // DELETE
 router.delete(
