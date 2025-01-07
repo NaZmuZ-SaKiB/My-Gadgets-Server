@@ -4,7 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import { SettingsService } from './settings.service';
 
 const get = catchAsync(async (req, res) => {
-  const result = await SettingsService.get();
+  const result = await SettingsService.get(req.query?.type as string);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
