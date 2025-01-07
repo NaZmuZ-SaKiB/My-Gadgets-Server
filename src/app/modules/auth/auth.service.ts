@@ -14,7 +14,7 @@ const currentUser = async (id: string) => {
 };
 
 const signUp = async (payload: TUser) => {
-  if (payload.role !== USER_ROLE.USER) {
+  if (payload.role && payload.role !== USER_ROLE.USER) {
     throw new AppError(
       httpStatus.FORBIDDEN,
       `You are not allowed to create this role: "${payload.role}."`,
