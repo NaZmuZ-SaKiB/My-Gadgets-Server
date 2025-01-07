@@ -3,12 +3,20 @@ import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import { UserValidation } from './user.validation';
 import { UserController } from './user.controller';
+import { USER_ROLE } from './user.constant';
+import { AuthValidation } from '../auth/auth.validation';
 
 const router = Router();
 
 // GET
 
 // POST
+router.post(
+  '/create-admin',
+  auth(USER_ROLE.SUPER_ADMIN),
+  validateRequest(AuthValidation.signUp),
+  UserController.createAdmin,
+);
 
 // PATCH
 router.patch(
