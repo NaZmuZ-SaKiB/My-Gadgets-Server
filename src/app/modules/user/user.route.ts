@@ -9,6 +9,11 @@ import { AuthValidation } from '../auth/auth.validation';
 const router = Router();
 
 // GET
+router.get(
+  '/',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  UserController.getAll,
+);
 
 // POST
 router.post(
