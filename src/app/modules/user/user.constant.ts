@@ -2,6 +2,8 @@ import { TUserRole } from './user.type';
 
 export const userRoles: TUserRole[] = ['super_admin', 'admin', 'user'];
 
+export const userSearchableFields = ['name', 'email'];
+
 export const USER_ROLE = {
   SUPER_ADMIN: 'super_admin',
   ADMIN: 'admin',
