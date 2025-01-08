@@ -14,6 +14,18 @@ const createAdmin = catchAsync(async (req, res) => {
   });
 });
 
+const getAll = catchAsync(async (req, res) => {
+  const result = await UserService.getAll(req.query);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Users fetched successfully',
+    data: result.data,
+    meta: result.meta,
+  });
+});
+
 const update = catchAsync(async (req, res) => {
   const result = await UserService.update(req?.user?._id, req.body);
 
@@ -27,5 +39,6 @@ const update = catchAsync(async (req, res) => {
 
 export const UserController = {
   createAdmin,
+  getAll,
   update,
 };
