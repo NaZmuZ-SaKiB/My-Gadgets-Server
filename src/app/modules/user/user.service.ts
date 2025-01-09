@@ -2,7 +2,9 @@ import { FilterQuery } from 'mongoose';
 import calculatePagination from '../../utils/calculatePagination';
 import { USER_ROLE, userRoles, userSearchableFields } from './user.constant';
 import User from './user.model';
-import { TUser } from './user.type';
+import { TUser, TUserRole } from './user.type';
+import AppError from '../../errors/AppError';
+import httpStatus from 'http-status';
 
 const createAdmin = async (payload: TUser) => {
   await User.create({ ...payload, role: USER_ROLE.ADMIN });
@@ -56,8 +58,22 @@ const update = async (
   return null;
 };
 
+const userRoleToggle = async (
+  authUserId: string,
+  payload: { id: string; role: TUserRole },
+) => {
+  if (authUserId === payload.id) {
+    throw new AppError(httpStatus.FORBIDDEN, 'You cannot change your own role');
+  }
+
+  await User.findByIdAndUpdate(payload.id, { role: payload.role });
+
+  return null;
+};
+
 export const UserService = {
   createAdmin,
   getAll,
   update,
+  userRoleToggle,
 };
