@@ -37,8 +37,20 @@ const update = catchAsync(async (req, res) => {
   });
 });
 
+const userRoleToggle = catchAsync(async (req, res) => {
+  const result = await UserService.userRoleToggle(req?.user?._id, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User role updated',
+    data: result,
+  });
+});
+
 export const UserController = {
   createAdmin,
   getAll,
   update,
+  userRoleToggle,
 };
