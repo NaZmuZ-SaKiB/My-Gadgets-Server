@@ -31,4 +31,11 @@ router.patch(
   UserController.update,
 );
 
+router.patch(
+  '/role-toggle',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  validateRequest(UserValidation.userRoleToggle),
+  UserController.userRoleToggle,
+);
+
 export const UserRouter = router;
