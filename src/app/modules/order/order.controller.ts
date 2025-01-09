@@ -38,7 +38,7 @@ const getAll = catchAsync(async (req, res) => {
 });
 
 const getById = catchAsync(async (req, res) => {
-  const result = await OrderServices.getById(req.params?.id);
+  const result = await OrderServices.getById(req?.user, req.params?.id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
