@@ -6,6 +6,8 @@ import { ORDER_STATUS } from './order.constant';
 import calculatePagination from '../../utils/calculatePagination';
 import { FilterQuery, startSession } from 'mongoose';
 import { Product } from '../product/product.model';
+import { TUserRole } from '../user/user.type';
+import { USER_ROLE } from '../user/user.constant';
 
 const create = async (userId: string, payload: TOrder) => {
   const session = await startSession();
@@ -132,11 +134,18 @@ const getAll = async (filters: Record<string, any>) => {
   };
 };
 
-const getById = async (orderId: string) => {
+const getById = async (
+  user: { _id: string; role: TUserRole },
+  orderId: string,
+) => {
   const order = await Order.findById(orderId).populate([
     'user',
     'shippingAddress',
   ]);
+
+  if (user.role === USER_ROLE.USER && user._id !== `${order?.user._id}`) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Order not found.');
+  }
 
   return order;
 };
