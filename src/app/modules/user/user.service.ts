@@ -26,7 +26,11 @@ const getAll = async (filters: Record<string, any>) => {
     query.role = filters.role;
   }
 
-  const users = await User.find(query)
+  const finalQuery: FilterQuery<TUser> = {
+    $and: [query, { role: { $ne: USER_ROLE.SUPER_ADMIN } }],
+  };
+
+  const users = await User.find(finalQuery)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
     .limit(limit);
