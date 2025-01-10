@@ -109,7 +109,11 @@ const getAll = async (filters: Record<string, any>) => {
   }
 
   if (filters?.isPaid) {
-    conditions.isPaid = true;
+    if (filters?.isPaid === 'true') {
+      conditions.isPaid = true;
+    } else {
+      conditions.isPaid = false;
+    }
   }
 
   if (filters?.user) {
