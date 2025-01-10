@@ -31,6 +31,10 @@ const orderItem = z.object({
 });
 
 const create = z.object({
+  orderId: z.string({
+    required_error: 'Order ID is required',
+    invalid_type_error: 'Order ID must be a string',
+  }),
   orderItems: z.array(orderItem).min(1, {
     message: 'Order items must have at least one item',
   }),
