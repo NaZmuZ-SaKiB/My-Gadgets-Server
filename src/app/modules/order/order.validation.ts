@@ -49,7 +49,7 @@ const create = z.object({
   paymentResult: z.string().optional(),
   transactionId: z.string().optional(),
   isPaid: z.boolean().optional(),
-  paidAt: z.date().optional(),
+  paidAt: z.string().datetime().optional(),
   deliveryOption: z.enum([...(orderDeliveryOptions as [string, ...string[]])], {
     required_error: 'Delivery Option is required',
   }),
