@@ -16,6 +16,13 @@ export const orderStatuses: TOrderStatus[] = [
 
 export const orderDeliveryOptions: TDeliveryOption[] = ['pickup', 'delivery'];
 
+export const orderSearchableFields = [
+  '_id',
+  'status',
+  'paymentMethod',
+  'transactionId',
+];
+
 export const ORDER_STATUS = {
   PENDING: 'pending',
   PROCESSING: 'processing',
