@@ -17,7 +17,7 @@ export const orderStatuses: TOrderStatus[] = [
 export const orderDeliveryOptions: TDeliveryOption[] = ['pickup', 'delivery'];
 
 export const orderSearchableFields = [
-  '_id',
+  'orderId',
   'status',
   'paymentMethod',
   'transactionId',
