@@ -21,6 +21,7 @@ export type TOrderStatus =
 export type TDeliveryOption = 'pickup' | 'delivery';
 
 export type TOrder = {
+  orderId: string;
   user: Types.ObjectId;
   orderItems: TOrderItem[];
   shippingAddress: Types.ObjectId;
