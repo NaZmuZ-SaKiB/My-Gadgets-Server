@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import Order from './order.model';
 import { TOrder } from './order.type';
-import { ORDER_STATUS } from './order.constant';
+import { ORDER_STATUS, orderSearchableFields } from './order.constant';
 import calculatePagination from '../../utils/calculatePagination';
 import { FilterQuery, startSession } from 'mongoose';
 import { Product } from '../product/product.model';
@@ -98,7 +98,14 @@ const update = async (orderId: string, payload: Partial<TOrder>) => {
 const getAll = async (filters: Record<string, any>) => {
   const { page, limit, skip, sort, sortOrder } = calculatePagination(filters);
 
-  const conditions: FilterQuery<TOrder> = {};
+  // handle search
+  const searchConditions = {
+    $or: orderSearchableFields.map((field) => ({
+      [field]: { $regex: filters?.searchTerm ?? '', $options: 'i' },
+    })),
+  };
+
+  const conditions: FilterQuery<TOrder> = searchConditions;
 
   if (filters?.status) {
     conditions.status = filters?.status;
