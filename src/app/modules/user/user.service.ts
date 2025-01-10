@@ -12,6 +12,12 @@ const createAdmin = async (payload: TUser) => {
   return null;
 };
 
+const getById = async (userId: string) => {
+  const user = await User.findById(userId);
+
+  return user;
+};
+
 const getAll = async (filters: Record<string, any>) => {
   const { page, limit, skip, sort, sortOrder } = calculatePagination(filters);
 
@@ -73,6 +79,7 @@ const userRoleToggle = async (
 
 export const UserService = {
   createAdmin,
+  getById,
   getAll,
   update,
   userRoleToggle,
