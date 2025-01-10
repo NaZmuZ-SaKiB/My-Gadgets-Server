@@ -14,6 +14,11 @@ router.get(
   auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
   UserController.getAll,
 );
+router.get(
+  '/:id',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  UserController.getById,
+);
 
 // POST
 router.post(
