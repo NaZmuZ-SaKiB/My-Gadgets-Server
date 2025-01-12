@@ -171,7 +171,7 @@ const topSelling = async () => {
         quantity: '$productDetails.quantity',
         salePrice: '$productDetails.salePrice',
         slug: '$productDetails.slug',
-        image: { $arrayElemAt: ['$productDetails.images', 0] },
+        images: '$productDetails.images',
         totalSold: 1,
       },
     },
