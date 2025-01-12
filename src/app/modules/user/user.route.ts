@@ -15,6 +15,11 @@ router.get(
   UserController.getAll,
 );
 router.get(
+  '/dashboard',
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  UserController.dashboard,
+);
+router.get(
   '/:id',
   auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
   UserController.getById,
