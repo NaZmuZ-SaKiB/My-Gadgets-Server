@@ -5,6 +5,9 @@ import { TProduct } from './product.type';
 import calculatePagination from '../../utils/calculatePagination';
 import { productSearchableFields } from './product.constant';
 import { generateProductQuery } from './product.utils';
+import Settings from '../settings/settings.model';
+import { Types } from 'mongoose';
+import { THomepageSettings } from '../settings/settings.type';
 
 const create = async (userId: string, payload: TProduct) => {
   await Product.create({ ...payload, updatedBy: userId });
@@ -99,7 +102,91 @@ const getById = async (id: string) => {
 };
 
 const remove = async (ids: string[]) => {
-  await Product.deleteMany({ _id: { $in: ids } });
+  // Get homepage settings
+  // (only the fields that contain product ids)
+  const settings = await Settings.findOne().select([
+    'homepage.popularProducts',
+    'homepage.featuredProducts',
+    'homepage.flashSale',
+    'homepage.topSellingProducts',
+    'homepage.trendingProducts',
+  ]);
+
+  if (!settings) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Settings not found.');
+  }
+
+  // Extract homepage settings
+  const homepageSettings: Partial<THomepageSettings> = settings.homepage;
+
+  // Fields that contain product ids[] (same type)
+  const homepageSettingsFields: (keyof THomepageSettings)[] = [
+    'popularProducts',
+    'topSellingProducts',
+    'trendingProducts',
+  ];
+
+  // Remove product ids from homepage settings
+  ids.forEach((productId) => {
+    // Remove product id from each field (same type)
+    homepageSettingsFields.forEach((field) => {
+      const index = (homepageSettings[field] as Types.ObjectId[])?.findIndex(
+        (i) => i.equals(productId),
+      );
+
+      if (index !== -1) {
+        (homepageSettings[field] as any).splice(index, 1);
+      }
+    });
+
+    // Remove product id from flashSale and featuredProducts
+    const flashSaleIndex =
+      homepageSettings.flashSale?.findIndex((item) =>
+        item.product.equals(productId),
+      ) ?? -1;
+
+    if (flashSaleIndex !== -1) {
+      homepageSettings.flashSale?.splice(flashSaleIndex, 1);
+    }
+
+    homepageSettings.featuredProducts = homepageSettings.featuredProducts?.map(
+      (featuredProduct) => {
+        const productIndex = featuredProduct.products.findIndex((i) =>
+          i.equals(productId),
+        );
+
+        if (productIndex !== -1) {
+          featuredProduct.products.splice(productIndex, 1);
+        }
+
+        return featuredProduct;
+      },
+    );
+  });
+
+  const session = await Product.startSession();
+
+  try {
+    session.startTransaction();
+
+    await Settings.findByIdAndUpdate(
+      settings._id,
+      { homepage: homepageSettings },
+      { session },
+    );
+
+    await Product.deleteMany({ _id: { $in: ids } }, { session });
+
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+
+    throw error;
+  }
+
+  return null;
 };
 
 export const ProductService = {
