@@ -5,6 +5,10 @@ import User from './user.model';
 import { TUser, TUserRole } from './user.type';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import Order from '../order/order.model';
+import { Product } from '../product/product.model';
+import Review from '../review/review.model';
+import { ORDER_STATUS } from '../order/order.constant';
 
 const createAdmin = async (payload: TUser) => {
   await User.create({ ...payload, role: USER_ROLE.ADMIN });
@@ -77,10 +81,51 @@ const userRoleToggle = async (
   return null;
 };
 
+const dashboard = async () => {
+  const totalUsers = await User.countDocuments({
+    role: { $ne: USER_ROLE.SUPER_ADMIN },
+  });
+
+  const totalOrders = await Order.countDocuments({
+    status: { $ne: ORDER_STATUS.CANCELLED },
+  });
+
+  const pendingOrders = await Order.countDocuments({
+    status: ORDER_STATUS.PENDING,
+  });
+  const processingOrders = await Order.countDocuments({
+    status: ORDER_STATUS.PROCESSING,
+  });
+  const shippedOrders = await Order.countDocuments({
+    status: ORDER_STATUS.SHIPPED,
+  });
+
+  const date30DaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
+
+  const completedOrders = await Order.find({
+    status: ORDER_STATUS.COMPLETED,
+    createdAt: { $gte: date30DaysAgo },
+  });
+
+  const totalSale = completedOrders.reduce(
+    (acc, order) => acc + order.totalPrice,
+    0,
+  );
+
+  const canceledOrders = await Order.countDocuments({
+    status: ORDER_STATUS.CANCELLED,
+  });
+
+  const totalProducts = await Product.countDocuments();
+
+  const totalReviews = await Review.countDocuments();
+};
+
 export const UserService = {
   createAdmin,
   getById,
   getAll,
   update,
   userRoleToggle,
+  dashboard,
 };
