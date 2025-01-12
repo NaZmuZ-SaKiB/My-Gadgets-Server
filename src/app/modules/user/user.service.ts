@@ -93,9 +93,11 @@ const dashboard = async () => {
   const pendingOrders = await Order.countDocuments({
     status: ORDER_STATUS.PENDING,
   });
+
   const processingOrders = await Order.countDocuments({
     status: ORDER_STATUS.PROCESSING,
   });
+
   const shippedOrders = await Order.countDocuments({
     status: ORDER_STATUS.SHIPPED,
   });
@@ -119,6 +121,19 @@ const dashboard = async () => {
   const totalProducts = await Product.countDocuments();
 
   const totalReviews = await Review.countDocuments();
+
+  return {
+    totalUsers,
+    totalOrders,
+    pendingOrders,
+    processingOrders,
+    shippedOrders,
+    completedOrders: completedOrders.length,
+    canceledOrders,
+    totalSale,
+    totalProducts,
+    totalReviews,
+  };
 };
 
 export const UserService = {
