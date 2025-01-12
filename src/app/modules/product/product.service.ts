@@ -8,6 +8,7 @@ import { generateProductQuery } from './product.utils';
 import Settings from '../settings/settings.model';
 import { Types } from 'mongoose';
 import { THomepageSettings } from '../settings/settings.type';
+import Order from '../order/order.model';
 
 const create = async (userId: string, payload: TProduct) => {
   await Product.create({ ...payload, updatedBy: userId });
@@ -99,6 +100,84 @@ const getById = async (id: string) => {
   }
 
   return product;
+};
+
+const topSelling = async () => {
+  const products = await Order.aggregate([
+    {
+      $unwind: '$orderItems',
+    },
+    {
+      $group: {
+        _id: '$orderItems.product',
+        totalSold: { $sum: '$orderItems.quantity' },
+      },
+    },
+    {
+      $sort: { totalSold: -1 },
+    },
+    {
+      $limit: 10,
+    },
+    {
+      $lookup: {
+        from: 'products',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'productDetails',
+      },
+    },
+    {
+      $unwind: '$productDetails',
+    },
+    {
+      $lookup: {
+        from: 'media',
+        localField: 'productDetails.images',
+        foreignField: '_id',
+        as: 'productDetails.images',
+      },
+    },
+    {
+      $lookup: {
+        from: 'brands',
+        localField: 'productDetails.brand',
+        foreignField: '_id',
+        as: 'productDetails.brand',
+      },
+    },
+    {
+      $lookup: {
+        from: 'categories',
+        localField: 'productDetails.categories',
+        foreignField: '_id',
+        as: 'productDetails.categories',
+      },
+    },
+    {
+      $unwind: {
+        path: '$productDetails.brand',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
+    {
+      $project: {
+        _id: '$_id',
+        name: '$productDetails.name',
+        model: '$productDetails.model',
+        brand: '$productDetails.brand',
+        categories: '$productDetails.categories',
+        quantity: '$productDetails.quantity',
+        salePrice: '$productDetails.salePrice',
+        slug: '$productDetails.slug',
+        image: { $arrayElemAt: ['$productDetails.images', 0] },
+        totalSold: 1,
+      },
+    },
+  ]);
+
+  return products;
 };
 
 const remove = async (ids: string[]) => {
@@ -194,5 +273,6 @@ export const ProductService = {
   update,
   getAll,
   getById,
+  topSelling,
   remove,
 };
