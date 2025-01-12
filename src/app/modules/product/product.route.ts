@@ -9,6 +9,7 @@ const router = Router();
 
 // GET
 router.get('/', ProductController.getAll);
+router.get('/top-selling', ProductController.topSelling);
 router.get('/:id', ProductController.getById);
 
 // POST
