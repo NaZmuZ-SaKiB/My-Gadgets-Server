@@ -41,6 +41,17 @@ const getAll = catchAsync(async (req, res) => {
   });
 });
 
+const topSelling = catchAsync(async (req, res) => {
+  const result = await ProductService.topSelling();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Products fetched successfully',
+    data: result,
+  });
+});
+
 const getById = catchAsync(async (req, res) => {
   const result = await ProductService.getById(req.params?.id);
 
@@ -68,5 +79,6 @@ export const ProductController = {
   update,
   getAll,
   getById,
+  topSelling,
   remove,
 };
