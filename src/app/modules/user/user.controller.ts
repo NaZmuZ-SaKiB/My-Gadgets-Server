@@ -59,10 +59,22 @@ const userRoleToggle = catchAsync(async (req, res) => {
   });
 });
 
+const dashboard = catchAsync(async (req, res) => {
+  const result = await UserService.dashboard();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Dashboard data fetched',
+    data: result,
+  });
+});
+
 export const UserController = {
   createAdmin,
   getById,
   getAll,
   update,
   userRoleToggle,
+  dashboard,
 };
