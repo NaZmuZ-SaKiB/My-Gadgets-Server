@@ -60,7 +60,7 @@ const getAllByProductId = catchAsync(async (req, res) => {
 });
 
 const remove = catchAsync(async (req, res) => {
-  const result = await ReviewService.remove(req.body.ids);
+  const result = await ReviewService.remove(req.params?.id);
 
   sendResponse(res, {
     statusCode: httpStatus.NO_CONTENT,
