@@ -86,8 +86,8 @@ const getAllByProductId = async (productId: string) => {
   return reviews;
 };
 
-const remove = async (ids: string[]) => {
-  await Review.deleteMany({ _id: { $in: ids } });
+const remove = async (id: string) => {
+  await Review.findByIdAndDelete(id);
 
   return null;
 };
