@@ -16,21 +16,15 @@ const homePopulate2 = [
   },
   {
     path: 'homepage.popularProducts',
-    populate: {
-      path: 'images',
-    },
+    populate: ['images', 'brand'],
   },
   {
     path: 'homepage.topSellingProducts',
-    populate: {
-      path: 'images',
-    },
+    populate: ['images', 'brand'],
   },
   {
     path: 'homepage.trendingProducts',
-    populate: {
-      path: 'images',
-    },
+    populate: ['images', 'brand'],
   },
   {
     path: 'homepage.featuredProducts',
@@ -40,7 +34,7 @@ const homePopulate2 = [
       },
       {
         path: 'products',
-        populate: 'images',
+        populate: ['images', 'brand'],
       },
     ],
   },
