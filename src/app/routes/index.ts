@@ -10,6 +10,7 @@ import { ReviewRouter } from '../modules/review/review.route';
 import { ShippingAddressRouter } from '../modules/shippingAddress/shippingAddress.route';
 import { OrderRouter } from '../modules/order/order.route';
 import { UserRouter } from '../modules/user/user.route';
+import { WishlistRouter } from '../modules/wishlist/wishlist.route';
 
 const MainRouter = Router();
 
@@ -62,6 +63,10 @@ const routes: TRoute[] = [
   {
     path: '/order',
     router: OrderRouter,
+  },
+  {
+    path: '/wishlist',
+    router: WishlistRouter,
   },
 ];
 
