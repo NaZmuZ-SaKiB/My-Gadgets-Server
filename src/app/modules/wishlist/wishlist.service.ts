@@ -37,7 +37,15 @@ const remove = async (userId: string, productId: string) => {
 const get = async (userId: string) => {
   const wishlist = await Wishlist.findOne({ user: userId }).populate({
     path: 'products',
-    select: ['_id', 'name', 'slug', 'salePrice', 'regularPrice', 'images'],
+    select: [
+      '_id',
+      'name',
+      'slug',
+      'quantity',
+      'salePrice',
+      'regularPrice',
+      'images',
+    ],
     populate: ['images'],
   });
 
