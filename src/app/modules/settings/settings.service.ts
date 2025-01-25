@@ -45,6 +45,10 @@ const homePopulate2 = [
       populate: 'images',
     },
   },
+  {
+    path: 'homepage.featuredBrands',
+    populate: ['image'],
+  },
 ];
 
 const categoryPopulate = [
