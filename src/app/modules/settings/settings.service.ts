@@ -55,6 +55,10 @@ const categoryPopulate = [
   { path: 'category.showOnTopMenu', populate: 'subCategories' },
 ];
 
+// *-------------------
+// *    Services
+// *-------------------
+
 const get = async (type: string) => {
   if (type === 'homepage') {
     const settings = await Settings.findOne()
@@ -71,6 +75,10 @@ const get = async (type: string) => {
     return settings;
   } else if (type === 'footer') {
     const settings = await Settings.findOne().select('footer');
+
+    return settings;
+  } else if (type === 'social') {
+    const settings = await Settings.findOne().select('social');
 
     return settings;
   } else {
