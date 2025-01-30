@@ -48,6 +48,14 @@ const update = z.object({
       copyright: z.string().optional(),
     })
     .optional(),
+
+  social: z.object({
+    facebook: z.string().optional(),
+    twitter: z.string().optional(),
+    instagram: z.string().optional(),
+    linkedin: z.string().optional(),
+    youtube: z.string().optional(),
+  }),
 });
 
 export const SettingsValidation = {
