@@ -49,13 +49,15 @@ const update = z.object({
     })
     .optional(),
 
-  social: z.object({
-    facebook: z.string().optional(),
-    twitter: z.string().optional(),
-    instagram: z.string().optional(),
-    linkedin: z.string().optional(),
-    youtube: z.string().optional(),
-  }),
+  social: z
+    .object({
+      facebook: z.string().optional(),
+      twitter: z.string().optional(),
+      instagram: z.string().optional(),
+      linkedin: z.string().optional(),
+      youtube: z.string().optional(),
+    })
+    .optional(),
 });
 
 export const SettingsValidation = {
