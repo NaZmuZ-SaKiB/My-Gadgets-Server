@@ -4,6 +4,7 @@ import {
   TFooterSettings,
   THomepageSettings,
   TSettings,
+  TSocialSettings,
 } from './settings.type';
 
 const homepageSettingsSchema = new Schema<THomepageSettings>(
@@ -81,10 +82,24 @@ const footerSettingsSchema = new Schema<TFooterSettings>(
   },
 );
 
+const socialSettingsSchema = new Schema<TSocialSettings>(
+  {
+    facebook: String,
+    twitter: String,
+    instagram: String,
+    linkedin: String,
+    youtube: String,
+  },
+  {
+    _id: false,
+  },
+);
+
 const settingsSchema = new Schema<TSettings>({
   homepage: homepageSettingsSchema,
   category: categorySettingsSchema,
   footer: footerSettingsSchema,
+  social: socialSettingsSchema,
 });
 
 const Settings = model<TSettings>('Settings', settingsSchema);
