@@ -33,8 +33,17 @@ export type TCategorySettings = {
   showOnTopMenu: Types.ObjectId[];
 };
 
+export type TSocialSettings = {
+  facebook: string;
+  twitter: string;
+  instagram: string;
+  linkedin: string;
+  youtube: string;
+};
+
 export type TSettings = {
   homepage: THomepageSettings;
   category: TCategorySettings;
   footer: TFooterSettings;
+  social: TSocialSettings;
 };
