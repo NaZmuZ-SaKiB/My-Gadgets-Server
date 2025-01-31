@@ -30,11 +30,6 @@ router.patch(
   validateRequest(BrandValidation.create.partial()),
   BrandController.update,
 );
-router.patch(
-  '/:id/featured',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
-  BrandController.toggleFeatured,
-);
 
 // DELETE
 router.delete(
