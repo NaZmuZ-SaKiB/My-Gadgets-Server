@@ -9,10 +9,6 @@ const brandSchema = new Schema<TBrand>(
       unique: true,
       trim: true,
     },
-    featured: {
-      type: Boolean,
-      default: false,
-    },
     image: {
       type: Schema.Types.ObjectId,
       ref: 'Media',
