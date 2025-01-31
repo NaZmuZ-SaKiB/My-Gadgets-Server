@@ -52,17 +52,6 @@ const getById = catchAsync(async (req, res) => {
   });
 });
 
-const toggleFeatured = catchAsync(async (req, res) => {
-  const result = await BrandService.toggleFeatured(req.params?.id);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Featured updated successfully',
-    data: result,
-  });
-});
-
 const remove = catchAsync(async (req, res) => {
   const result = await BrandService.remove(req.body?.ids);
 
@@ -79,6 +68,5 @@ export const BrandController = {
   update,
   getAll,
   getById,
-  toggleFeatured,
   remove,
 };
