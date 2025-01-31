@@ -52,28 +52,6 @@ const getById = async (id: string) => {
   return brand;
 };
 
-const toggleFeatured = async (id: string) => {
-  const featuredCount = await Brand.countDocuments({ featured: true });
-
-  if (featuredCount >= 12) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Only 12 brands can be featured at a time.',
-    );
-  }
-
-  const brand = await Brand.findById(id);
-
-  if (!brand) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Brand not found.');
-  }
-
-  brand.featured = !brand.featured;
-  await brand.save();
-
-  return null;
-};
-
 const remove = async (ids: string[]) => {
   const product = await Product.findOne({ brand: { $in: ids } })
     .select('_id brand')
@@ -96,6 +74,5 @@ export const BrandService = {
   update,
   getAll,
   getById,
-  toggleFeatured,
   remove,
 };
