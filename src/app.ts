@@ -15,7 +15,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use('/api', MainRouter);
 
 app.get('/', (req, res) => {
-  res.send('Gadget Inventory Management!');
+  res.send('My Gadgets Backend!');
 });
 
 app.use(globalErrorHandler);
