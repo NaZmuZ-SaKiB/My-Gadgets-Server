@@ -51,7 +51,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   }
 
   // Ultimate Return
-  return res.status(statusCode).json({
+  res.status(statusCode).json({
     success: false,
     message,
     errorType,
