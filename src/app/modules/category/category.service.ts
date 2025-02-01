@@ -138,9 +138,6 @@ const getAll = async (filters: Record<string, any>) => {
     query.parent = { $in: [null, undefined] };
   }
 
-  if (filters?.featured === 'true') query.featured = true;
-  if (filters?.showOnTopMenu === 'true') query.showOnTopMenu = true;
-
   const categories = await Category.find(query)
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
