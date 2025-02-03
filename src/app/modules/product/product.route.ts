@@ -32,6 +32,7 @@ router.patch(
 router.delete(
   '/',
   auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  validateRequest(ProductValidation.remove),
   ProductController.remove,
 );
 
