@@ -10,12 +10,12 @@ const router = Router();
 // GET
 router.get(
   '/',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.TEST_ADMIN),
   MediaController.getAll,
 );
 router.get(
   '/:id',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.TEST_ADMIN),
   MediaController.getById,
 );
 

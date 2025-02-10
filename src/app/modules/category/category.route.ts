@@ -12,7 +12,7 @@ router.get('/', CategoryController.getAll);
 router.get('/with-sub-cat', CategoryController.getAllWithSubCats);
 router.get(
   '/:id',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.TEST_ADMIN),
   CategoryController.getById,
 );
 

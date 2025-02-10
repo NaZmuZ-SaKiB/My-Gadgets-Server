@@ -11,17 +11,17 @@ const router = Router();
 // GET
 router.get(
   '/',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.TEST_ADMIN),
   UserController.getAll,
 );
 router.get(
   '/dashboard',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.TEST_ADMIN),
   UserController.dashboard,
 );
 router.get(
   '/:id',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.TEST_ADMIN),
   UserController.getById,
 );
 

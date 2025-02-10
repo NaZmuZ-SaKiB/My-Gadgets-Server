@@ -11,7 +11,7 @@ const router = Router();
 router.get('/', BrandController.getAll);
 router.get(
   '/:id',
-  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN),
+  auth(USER_ROLE.SUPER_ADMIN, USER_ROLE.ADMIN, USER_ROLE.TEST_ADMIN),
   BrandController.getById,
 );
 

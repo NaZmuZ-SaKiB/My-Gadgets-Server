@@ -3,6 +3,7 @@ import validateRequest from '../../middlewares/validateRequest';
 import { AuthValidation } from './auth.validation';
 import { AuthController } from './auth.controller';
 import auth from '../../middlewares/auth';
+import { USER_ROLE } from '../user/user.constant';
 
 const router = Router();
 
@@ -24,7 +25,7 @@ router.post(
 // PATCH
 router.patch(
   '/change-password',
-  auth(),
+  auth(USER_ROLE.USER, USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
   validateRequest(AuthValidation.changePassword),
   AuthController.changePassword,
 );
