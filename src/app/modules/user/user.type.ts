@@ -1,6 +1,6 @@
-import { Types } from "mongoose";
+import { Types } from 'mongoose';
 
-export type TUserRole = "super_admin" | "admin" | "user";
+export type TUserRole = 'super_admin' | 'admin' | 'user' | 'test_admin';
 
 export type TUser = {
   name: string;
