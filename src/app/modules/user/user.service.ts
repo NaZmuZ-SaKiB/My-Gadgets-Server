@@ -106,7 +106,7 @@ const dashboard = async () => {
 
   const completedOrders = await Order.find({
     status: ORDER_STATUS.COMPLETED,
-    createdAt: { $gte: date30DaysAgo },
+    // createdAt: { $gte: date30DaysAgo },
   });
 
   const totalSale = completedOrders.reduce(
