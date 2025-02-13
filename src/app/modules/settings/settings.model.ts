@@ -95,12 +95,15 @@ const socialSettingsSchema = new Schema<TSocialSettings>(
   },
 );
 
-const settingsSchema = new Schema<TSettings>({
-  homepage: homepageSettingsSchema,
-  category: categorySettingsSchema,
-  footer: footerSettingsSchema,
-  social: socialSettingsSchema,
-});
+const settingsSchema = new Schema<TSettings>(
+  {
+    homepage: homepageSettingsSchema,
+    category: categorySettingsSchema,
+    footer: footerSettingsSchema,
+    social: socialSettingsSchema,
+  },
+  { timestamps: true },
+);
 
 const Settings = model<TSettings>('Settings', settingsSchema);
 
